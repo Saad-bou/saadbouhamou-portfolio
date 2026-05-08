@@ -1,8 +1,10 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Container from "./Container";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -11,65 +13,77 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
-      <Container>
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tighter hover:opacity-80 transition-opacity">
-            SB<span className="text-primary text-blue-500">.</span>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white/70">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="hover:text-white transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button className="hidden md:block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-black hover:bg-white/90 transition-all">
-              Let's Talk
-            </button>
-
-            {/* Mobile Menu Hamburger Button */}
-            <button 
-              className="md:hidden flex flex-col items-center justify-center gap-1.5 w-8 h-8 focus:outline-none"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <span className={`w-5 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-              <span className={`w-5 h-0.5 bg-white transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-              <span className={`w-5 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Panel */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-white/5 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="text-white/70 hover:text-white transition-colors text-sm font-medium px-2 py-1"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <button className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-white/90 transition-all w-fit mt-2">
-              Let's Talk
-            </button>
-          </div>
+    <header
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out will-change-[top,padding]",
+        isScrolled ? "top-4 px-4" : "top-0 px-0",
+      )}
+    >
+      <nav
+        className={cn(
+          "mx-auto transition-all duration-500 ease-in-out border", // ديما كاين border
+          isScrolled
+            ? "max-w-2xl rounded-full border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.3)] py-2"
+            : "max-w-full border-transparent bg-transparent py-5", // هنا كيرجع شفاف بلا ما يختفي
         )}
-      </Container>
-    </nav>
+      >
+        <Container>
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="group flex items-center font-bold tracking-tighter transition-opacity hover:opacity-80"
+            >
+              <span className="text-terminal drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] transition-transform group-hover:-translate-x-1">
+                {"<"}
+              </span>
+              <span className="text-[17px] mx-[1px]">sdbou</span>
+              <span className="text-terminal drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] transition-transform group-hover:translate-x-1">
+                {" />"}
+              </span>
+            </Link>
+
+            {/* Desktop Navigation - Hidden on Mobile */}
+            <div className="hidden md:flex items-center gap-8 text-[12px] font-medium tracking-widest text-white/50">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="hover:text-white transition-colors"
+                >
+                  {link.name.toUpperCase()}
+                </Link>
+              ))}
+            </div>
+
+            {/* Let's Talk Button - Always Visible (Mobile & Desktop) */}
+            <div className="flex items-center">
+              <Button
+                variant={isScrolled ? "default" : "outline"}
+                size="sm"
+                className={cn(
+                  "rounded-full px-5 text-[11px] font-bold uppercase tracking-wider transition-all duration-500",
+                  !isScrolled && "border-white/10 text-white hover:bg-white/5",
+                  isScrolled && "bg-white text-black",
+                )}
+              >
+                {"Let's Talk"}
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </nav>
+    </header>
   );
 }

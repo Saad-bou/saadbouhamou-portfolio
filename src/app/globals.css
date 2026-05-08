@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0a0a0a;
+  --color-background: #000000; /* رجعناه Black حقيقي باش يبان الخضر واعر */
   --color-foreground: #fafafa;
+  
+  /* اللون السحري ديالنا */
+  --color-terminal: #00FF41; 
 }
 
 :root {
@@ -20,7 +23,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* التعديل على الاختيار (Selection) باش يجي مع الخضر */
 ::selection {
-  background: white;
+  background: var(--color-terminal);
   color: black;
 }
