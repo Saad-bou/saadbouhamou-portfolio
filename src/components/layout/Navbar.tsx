@@ -26,16 +26,16 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out will-change-[top,padding]",
-        isScrolled ? "top-4 px-4" : "top-0 px-0",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
+        isScrolled ? "top-2 sm:top-4 px-2 sm:px-4" : "top-0 px-0",
       )}
     >
       <nav
         className={cn(
-          "mx-auto transition-all duration-500 ease-in-out border", // ديما كاين border
+          "mx-auto transition-all duration-500 ease-in-out border",
           isScrolled
-            ? "max-w-2xl rounded-full border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.3)] py-2"
-            : "max-w-full border-transparent bg-transparent py-5", // هنا كيرجع شفاف بلا ما يختفي
+            ? "max-w-2xl rounded-full border-white/10 bg-black/60 backdrop-blur-xl py-2 px-2 sm:px-6"
+            : "max-w-full border-transparent bg-transparent py-4 sm:py-6",
         )}
       >
         <Container>

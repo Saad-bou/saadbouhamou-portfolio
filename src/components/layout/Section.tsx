@@ -10,7 +10,9 @@ export default function Section({ children, className, id }: SectionProps) {
   return (
     <section 
       id={id} 
-      className={cn("py-20 md:py-32", className)}
+      // زدنا pt-24 باش ندفعو المحتوى لتحت بجهد الـ Navbar
+      // وزدنا flex-col و items-center باش نضمنوا التوازن
+      className={cn("relative py-20 md:py-32 pt-28 md:pt-40", className)}
     >
       {children}
     </section>
