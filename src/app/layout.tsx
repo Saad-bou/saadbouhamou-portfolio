@@ -6,6 +6,9 @@ import CodeBackground from "@/components/layout/CodeBackground";
 export const metadata = {
   title: "Saad Bouhamou | Full-stack Developer",
   description: "Building the next generation of AI-driven web applications",
+  icons: {
+    icon: "/icon.svg", 
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
