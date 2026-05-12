@@ -23,8 +23,8 @@ interface TerminalLine {
 function useTerminalTyping(lines: TerminalLine[], typingSpeed = 40, lineDelay = 300) {
   const [visibleLines, setVisibleLines] = useState<number>(0);
   const [currentCharIndex, setCurrentCharIndex] = useState<number>(0);
-  const [isTypingDone, setIsTypingDone] = useState(false);
   const startedRef = useRef(false);
+  const isTypingDone = visibleLines > lines.length;
 
   useEffect(() => {
     if (startedRef.current) return;
@@ -41,7 +41,6 @@ function useTerminalTyping(lines: TerminalLine[], typingSpeed = 40, lineDelay = 
   useEffect(() => {
     if (visibleLines === 0) return;
     if (visibleLines > lines.length) {
-      setIsTypingDone(true);
       return;
     }
 
@@ -74,13 +73,13 @@ export default function Hero() {
   const [scanStarted, setScanStarted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [isTouchActive, setIsTouchActive] = useState(false);
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
+  const [, setIsTouchActive] = useState(false);
 
   const photoContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
   const isHoveringRef = useRef(false);
+  const isMobileDeviceRef = useRef(false);
 
   // Touch point
   const activePointRef = useRef<{ x: number; y: number } | null>(null);
@@ -91,7 +90,7 @@ export default function Hero() {
 
   useEffect(() => {
     // Check if it's a touch device (mobile)
-    setIsMobileDevice(window.matchMedia("(pointer: coarse)").matches);
+    isMobileDeviceRef.current = window.matchMedia("(pointer: coarse)").matches;
 
     // نبداو الـ scan بعد 200ms
     const startTimer = setTimeout(() => {
@@ -135,7 +134,6 @@ export default function Hero() {
   const renderTerminalLine1 = useCallback(
     (charCount: number, isCurrentlyTyping: boolean) => {
       const fullText = "saadbouhamou.dev git:(main)";
-      const visibleText = fullText.slice(0, charCount);
 
       // نقسمو النص لأجزاء ملونة
       const part1End = Math.min(charCount, 16); // "saadbouhamou.dev"
@@ -281,7 +279,7 @@ export default function Hero() {
         roamingPointRef.current.ty = point.y;
       } else {
         // Roaming state
-        if (!isMobileDevice) {
+        if (!isMobileDeviceRef.current) {
           // On desktop, we don't draw anything when not hovering
           frameId = requestAnimationFrame(draw);
           return;
