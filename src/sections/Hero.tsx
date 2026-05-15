@@ -10,16 +10,19 @@ export default function Hero() {
   const { scanComplete, scanStarted } = useScanAnimation();
 
   return (
-    <Section className="min-h-[95vh] flex items-center justify-center overflow-hidden relative">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-terminal/5 blur-[120px] rounded-full pointer-events-none z-0" />
+    <Section className="flex items-center justify-center overflow-hidden relative min-h-[100svh] lg:min-h-[100dvh]">
+      {/* Glow — محسن و مركّز مزيان */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-terminal/5 blur-[120px] sm:h-[600px] sm:w-[600px]" />
 
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          <HeroText />
-          <ScannedPhoto
-            scanComplete={scanComplete}
-            scanStarted={scanStarted}
-          />
+        {/* Mobile-first: الصورة فوق، والنص تحت. على lg+ كتنقلب */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-12">
+          <div className="order-2 lg:order-1">
+            <HeroText />
+          </div>
+          <div className="order-1 lg:order-2">
+            <ScannedPhoto scanComplete={scanComplete} scanStarted={scanStarted} />
+          </div>
         </div>
       </Container>
     </Section>

@@ -5,8 +5,9 @@ import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { useChat } from '@ai-sdk/react';
 import { UIMessage } from 'ai';
 import { CodeXml, Send, X, Minimize2 } from 'lucide-react';
+import { useVisualViewport } from '@/hooks/useVisualViewport';
 
-// ─── Helper: extract text from UIMessage parts ────────────────────────────────
+// ─── Helper: نستخرجو النص من UIMessage parts ─────────────────────────────────
 
 function getMessageText(msg: UIMessage): string {
   return msg.parts
@@ -15,7 +16,7 @@ function getMessageText(msg: UIMessage): string {
     .join('');
 }
 
-// ─── Typing Effect for AI Messages ───────────────────────────────────────────
+// ─── Typing Effect للـ AI Messages ────────────────────────────────────────────
 
 interface TypingMessageProps {
   content: string;
@@ -49,8 +50,6 @@ function TypingMessage({ content, isStreaming, onTick }: TypingMessageProps) {
   );
 }
 
-// ─── Code Icon SVG ────────────────────────────────────────────────────────────
-
 // ─── Online Pulse Dot ─────────────────────────────────────────────────────────
 
 function OnlineDot() {
@@ -72,6 +71,9 @@ export default function AIChatAgent() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const triggerControls = useAnimation();
+
+  // 🔥 الحل ديال الكيبورد — كنحسبو شحال كتاخد من الشاشة
+  const keyboardOffset = useVisualViewport();
 
   const { messages, sendMessage, status, error } = useChat();
 
@@ -125,12 +127,16 @@ export default function AIChatAgent() {
     scrollToBottom('smooth');
   }, [messages, isLoading, isOpen, isMinimized, scrollToBottom]);
 
-  // ── Focus input on open ────────────────────────────────────────────────────
+  // ── Focus input on open — ماشي على touch devices ──────────────────────────
   useEffect(() => {
-    if (isOpen && !isMinimized) {
+    if (!isOpen || isMinimized) return;
+
+    // على الموبايل ما نديروش auto-focus باش ما تطلعش الكيبورد بوحدها
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouch) {
       setTimeout(() => inputRef.current?.focus(), 300);
-      setTimeout(() => scrollToBottom('auto'), 300);
     }
+    setTimeout(() => scrollToBottom('auto'), 300);
   }, [isOpen, isMinimized, scrollToBottom]);
 
   useEffect(() => {
@@ -197,7 +203,8 @@ export default function AIChatAgent() {
           setIsMinimized(false);
         }}
         className={`
-          fixed bottom-6 right-6 z-50
+          fixed z-50
+          bottom-4 right-4 sm:bottom-6 sm:right-6
           w-14 h-14 rounded-full
           bg-[#0a0a0a] border border-[#00FF41]
           text-[#00FF41]
@@ -222,19 +229,24 @@ export default function AIChatAgent() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+            style={{
+              // 🔥 هنا الماجيك: الـ bottom كيتبدل ملي الكيبورد تطلع
+              bottom: `calc(env(safe-area-inset-bottom, 0px) + ${keyboardOffset > 0 ? keyboardOffset : 16}px)`,
+            }}
             className={`
-              fixed bottom-6 right-6 z-50
-              w-[360px] sm:w-[400px]
+              fixed z-50
+              right-3 left-3 sm:left-auto sm:right-6
+              w-auto sm:w-[400px]
               rounded-2xl overflow-hidden
               border border-[#00FF41]/40
               bg-[#050505]/85 backdrop-blur-xl
               shadow-[0_0_60px_rgba(0,255,65,0.12),0_8px_32px_rgba(0,0,0,0.8)]
               flex flex-col
-              ${isMinimized ? '' : 'h-[600px] max-h-[85vh]'}
+              ${isMinimized ? '' : 'h-[min(600px,calc(100dvh-2rem))]'}
             `}
           >
             {/* ─── Header ─────────────────────────────────────────────── */}
-            <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#00FF41]/20 bg-[#00FF41]/[0.04] shrink-0">
+            <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-[#00FF41]/20 bg-[#00FF41]/[0.04] shrink-0">
               <div className="flex items-center gap-3">
                 {/* Avatar */}
                 <div className="relative w-8 h-8 rounded-full border border-[#00FF41]/50 bg-[#0a0a0a] flex items-center justify-center text-[#00FF41]">
@@ -424,7 +436,7 @@ export default function AIChatAgent() {
                   )}
 
                   {/* ─── Input Area ───────────────────────────────── */}
-                  <div className="shrink-0 px-4 py-3 border-t border-[#00FF41]/15 bg-[#00FF41]/[0.02]">
+                  <div className="shrink-0 px-3 sm:px-4 py-3 border-t border-[#00FF41]/15 bg-[#00FF41]/[0.02]">
                     <div className="flex items-end gap-2 rounded-xl border border-[#00FF41]/25 bg-[#0a0a0a]/60 focus-within:border-[#00FF41]/60 focus-within:shadow-[0_0_12px_rgba(0,255,65,0.15)] transition-all duration-300 px-3 py-2">
                       <textarea
                         ref={inputRef}
@@ -474,20 +486,6 @@ export default function AIChatAgent() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* ── Global CSS ──────────────────────────────────────────────────── */}
-      <style>{`
-        @keyframes matrixPulse {
-          0%, 100% { box-shadow: 0 0 18px rgba(0, 255, 65, 0.35); }
-          50%       { box-shadow: 0 0 32px rgba(0, 255, 65, 0.65), 0 0 60px rgba(0, 255, 65, 0.2); }
-        }
-        .ai-chat-scrollbar::-webkit-scrollbar { width: 4px; }
-        .ai-chat-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .ai-chat-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(0, 255, 65, 0.2);
-          border-radius: 2px;
-        }
-      `}</style>
     </>
   );
 }

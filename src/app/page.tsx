@@ -4,7 +4,7 @@ import MatrixSectionReveal from "@/components/ui/MatrixSectionReveal";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <main className="relative z-10 min-h-svh">
       <Hero />
       <MatrixSectionReveal className="relative z-10">
         <Projects />

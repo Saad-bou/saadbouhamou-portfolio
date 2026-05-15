@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -19,7 +20,7 @@ const projects = [
     colSpan: 'col-span-12',
     image: '/projects/petit-college-vVIP.png',
     mobileImage: '/projects/petit-college-vVIP-mobile.png',
-    minHeight: 'aspect-[941/1672] md:aspect-[1774/887]',
+    aspect: 'aspect-[16/9] md:aspect-[1774/887]',
   },
   {
     id: 2,
@@ -29,7 +30,7 @@ const projects = [
     colSpan: 'col-span-12 md:col-span-6',
     image: '/projects/yamaha-desktop-vvip.png',
     mobileImage: '/projects/yamaha-mobile-vvip.png',
-    minHeight: 'min-h-[400px]',
+    aspect: 'aspect-[4/3] md:aspect-[16/9]',
   },
   {
     id: 3,
@@ -39,7 +40,7 @@ const projects = [
     colSpan: 'col-span-12 md:col-span-6',
     image: '/projects/jblmatrix.png',
     mobileImage: '/projects/jblmatrixmobile.png',
-    minHeight: 'min-h-[400px]',
+    aspect: 'aspect-[4/3] md:aspect-[16/9]',
   },
   {
     id: 4,
@@ -49,7 +50,7 @@ const projects = [
     colSpan: 'col-span-12 md:col-span-4',
     image: '/projects/samsungmatrix.png',
     mobileImage: '/projects/samsungmatrix.png',
-    minHeight: 'min-h-[400px]',
+    aspect: 'aspect-[4/3]',
   },
   {
     id: 5,
@@ -59,7 +60,7 @@ const projects = [
     colSpan: 'col-span-12 md:col-span-4',
     image: '/projects/assusmatrix.png',
     mobileImage: '/projects/assusmatrix.png',
-    minHeight: 'min-h-[400px]',
+    aspect: 'aspect-[4/3]',
   },
   {
     id: 6,
@@ -69,7 +70,7 @@ const projects = [
     colSpan: 'col-span-12 md:col-span-4',
     image: '/projects/promatrix.png',
     mobileImage: '/projects/promatrix.png',
-    minHeight: 'min-h-[400px]',
+    aspect: 'aspect-[4/3]',
   },
 ];
 
@@ -80,7 +81,7 @@ export default function Projects() {
     // Hide all cards initially
     gsap.set('.project-card', { y: 150, opacity: 0, scale: 0.95 });
 
-    // Use batch to reveal them piece by piece as you scroll
+    // Reveal cards on scroll — batch أحسن من واحد واحد
     ScrollTrigger.batch('.project-card', {
       start: 'top 85%',
       onEnter: (elements) => {
@@ -99,35 +100,12 @@ export default function Projects() {
       },
     });
 
-    // Magnetic Snapping
-    const cards = gsap.utils.toArray('.project-card') as HTMLElement[];
-    
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      snap: {
-        snapTo: (progress) => {
-          // Calculate the progress points for each card
-          const container = containerRef.current;
-          if (!container) return progress;
-          
-          const totalHeight = container.offsetHeight;
-          const points = cards.map(card => card.offsetTop / totalHeight);
-          points.push(1); // Ensure we can snap to the very end
-          
-          // Find the closest point to the current scroll progress
-          return gsap.utils.snap(points, progress);
-        },
-        duration: { min: 0.2, max: 0.7 },
-        delay: 0.15,
-        ease: "power2.inOut"
-      }
-    });
+    // 🔥 حيدنا Magnetic Snapping ScrollTrigger.create
+    // Lenis كافي — 3 snap engines كانو كيتقاتلو على الموبايل
   }, { scope: containerRef });
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative w-full py-24 px-4 md:px-8 max-w-7xl mx-auto z-10"
       id="projects"
@@ -141,29 +119,36 @@ export default function Projects() {
         </p>
       </div>
 
-      {/* Contiguous Bento Grid */}
+      {/* Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
         {projects.map((project) => (
-          <div 
-            key={project.id} 
-            className={`project-card group relative w-full overflow-hidden rounded-[2.5rem] bg-neutral-900/50 backdrop-blur-xl border border-white/5 transition-[border-color,shadow,background-color] duration-500 hover:border-[#00ff41] hover:bg-neutral-900/80 hover:shadow-[0_0_30px_rgba(0,255,65,0.15)] ${project.colSpan} ${project.minHeight}`}
+          <div
+            key={project.id}
+            className={`project-card group relative w-full overflow-hidden rounded-[2.5rem] bg-neutral-900/50 backdrop-blur-xl border border-white/5 transition-[border-color,shadow,background-color] duration-500 hover:border-[#00ff41] hover:bg-neutral-900/80 hover:shadow-[0_0_30px_rgba(0,255,65,0.15)] ${project.colSpan} ${project.aspect}`}
           >
-            {/* Background Image with Responsive Versions */}
+            {/* Background Image — next/image بدل raw <img> = AVIF/WebP + lazy + blur */}
             <div className="absolute inset-0 z-0 overflow-hidden rounded-[2.5rem] bg-black">
-              <picture className="block w-full h-full">
-                {project.mobileImage && (
-                  <source media="(max-width: 768px)" srcSet={project.mobileImage} />
-                )}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-contain object-center"
-                  loading="lazy"
-                />
-              </picture>
+              {/* Mobile image */}
+              <Image
+                src={project.mobileImage}
+                alt={project.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 0px"
+                className="object-contain object-center md:hidden"
+                loading="lazy"
+              />
+              {/* Desktop image */}
+              <Image
+                src={project.image}
+                alt={project.title}
+                fill
+                sizes="(max-width: 1280px) 50vw, 33vw"
+                className="hidden md:block object-contain object-center"
+                loading="lazy"
+              />
             </div>
-            
-            {/* Gradient Overlay for Text Readability */}
+
+            {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/10 z-10 transition-opacity duration-500 group-hover:opacity-90" />
 
             {/* Hover Icon */}
@@ -176,7 +161,7 @@ export default function Projects() {
               <div className="transform transition-transform duration-500 group-hover:-translate-y-2 md:group-hover:-translate-y-4">
                 <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                   {project.tech.map((tech, idx) => (
-                    <span 
+                    <span
                       key={idx}
                       className="px-3 py-1.5 md:px-4 md:py-2 text-[10px] md:text-xs lg:text-sm font-mono text-[#00ff41] bg-[#00ff41]/10 rounded-full border border-[#00ff41]/20 backdrop-blur-md"
                     >
@@ -184,11 +169,11 @@ export default function Projects() {
                     </span>
                   ))}
                 </div>
-                
+
                 <h3 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-4 tracking-tight group-hover:text-[#00ff41] transition-colors duration-300">
                   {project.title}
                 </h3>
-                
+
                 <p className="text-zinc-400 text-sm md:text-base lg:text-lg font-mono">
                   &gt; {project.category}
                 </p>

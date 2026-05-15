@@ -5,20 +5,19 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useSyncExternalStore } from 'react';
 
-gsap.registerPlugin(ScrollTrigger);
+// ⚠️ registerPlugin حيدناه من module scope — كان كيعطي SSR warning
+// دابا كيتسجل داخل useEffect فقط
 
 const getShouldSmoothScroll = () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const lowMemoryDevice =
     "deviceMemory" in navigator && Number(navigator.deviceMemory) <= 4;
-
   return !reduceMotion && !lowMemoryDevice;
 };
 
 const subscribeToMotionPreference = (callback: () => void) => {
   const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   mediaQuery.addEventListener("change", callback);
-
   return () => mediaQuery.removeEventListener("change", callback);
 };
 
@@ -30,34 +29,19 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   );
 
   useEffect(() => {
-    if (!shouldSmoothScroll) return;
+    // Register client-side فقط
+    gsap.registerPlugin(ScrollTrigger);
 
-    const ctx = gsap.context(() => {
-      const sections = gsap.utils.toArray<HTMLElement>(".reveal-section");
-
-      sections.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { autoAlpha: 0, y: 40 },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 88%",
-              once: true,
-            },
-          }
-        );
-      });
-    });
+    // 🔥 حيدنا الـ generic .reveal-section fade اللي هنا
+    // كل section عندها الـ reveal ديالها (MatrixSectionReveal)
+    // الـ double animation كانت كتسبب flickering فالـ Projects section
 
     ScrollTrigger.refresh();
 
-    return () => ctx.revert();
-  }, [shouldSmoothScroll]);
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, []);
 
   if (!shouldSmoothScroll) {
     return <>{children}</>;

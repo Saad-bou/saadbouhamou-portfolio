@@ -27,10 +27,12 @@ export default function ScannedPhoto({
   } = useMatrixEffect(scanComplete);
 
   return (
-    <div className="relative order-2 w-full flex flex-col items-center justify-center group">
-      <div className="absolute w-72 h-72 bg-terminal/10 blur-[80px] rounded-full z-0" />
+    <div className="relative w-full flex flex-col items-center justify-center group">
+      {/* Glow — مركّز مع الصورة بـ translate */}
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-terminal/10 blur-[80px]" />
 
-      <div className="relative flex flex-col items-center w-full max-w-[300px] sm:max-w-[450px]">
+      {/* الصورة + Terminal Bar */}
+      <div className="relative flex flex-col items-center w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[450px] mx-auto">
         <div
           ref={photoContainerRef}
           className="relative w-full aspect-[4/5] overflow-hidden"
@@ -42,6 +44,7 @@ export default function ScannedPhoto({
           onTouchEnd={handlePhotoTouchEnd}
           style={{ cursor: scanComplete ? "none" : "auto" }}
         >
+          {/* الصورة الأصلية بـ clip-path scan effect */}
           <div
             className="absolute inset-0 z-20"
             style={{
@@ -58,14 +61,16 @@ export default function ScannedPhoto({
           >
             <Image
               src="/saadbouhamou.png"
-              alt="Saad Bouhamou"
+              alt="Saad Bouhamou — Full-Stack Developer"
               fill
-              sizes="(max-width: 639px) 300px, 450px"
+              sizes="(max-width: 639px) 280px, (max-width: 1023px) 340px, 450px"
               className="object-contain"
-              preload
+              priority
+              fetchPriority="high"
             />
           </div>
 
+          {/* Scan line متحركة */}
           {scanStarted && !scanComplete && (
             <div
               className="absolute left-0 right-0 z-30 pointer-events-none"
@@ -80,6 +85,7 @@ export default function ScannedPhoto({
             </div>
           )}
 
+          {/* Grid overlay */}
           {scanStarted && !scanComplete && (
             <div
               className="absolute inset-0 z-25 pointer-events-none opacity-30"
@@ -92,6 +98,7 @@ export default function ScannedPhoto({
             />
           )}
 
+          {/* Matrix canvas effect بعد الـ scan */}
           {scanComplete && (
             <canvas
               ref={canvasRef}
@@ -99,6 +106,7 @@ export default function ScannedPhoto({
             />
           )}
 
+          {/* Custom cursor on hover (desktop only) */}
           {isHovering && scanComplete && (
             <div
               className="absolute z-50 pointer-events-none hidden md:block"

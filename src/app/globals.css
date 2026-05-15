@@ -1,19 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #000000; /* رجعناه Black حقيقي باش يبان الخضر واعر */
+  --color-background: #000000;
   --color-foreground: #fafafa;
-  
-  /* اللون السحري ديالنا */
-  --color-terminal: #00FF41; 
+  --color-terminal: #00FF41;
 }
 
 :root {
   color-scheme: dark;
 }
 
-html {
-  /* scroll-behavior: smooth; => Lenis كيدير smooth scrolling, ماخاصناش CSS يتعارض معاه */
+html, body {
+  /* نمنعو الـ rubber-band scroll اللي كيبين بياض على iOS */
+  background-color: #000;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -21,58 +21,72 @@ body {
   color: var(--color-foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* iOS keyboard: خلي الـ browser يصغر الـ layout viewport */
+  min-height: 100svh;
 }
 
-/* التعديل على الاختيار (Selection) باش يجي مع الخضر */
+/* Selection بالخضر */
 ::selection {
   background: var(--color-terminal);
   color: black;
 }
 
 /* ==============================
+   Viewport Height Utilities
+   ============================== */
+.h-dvh   { height: 100dvh; }
+.min-h-dvh { min-height: 100dvh; }
+.h-svh   { height: 100svh; }
+.min-h-svh { min-height: 100svh; }
+
+/* ==============================
+   Matrix Pulse — كانت inline فـ AIChatAgent، دبا هنا
+   ============================== */
+@keyframes matrixPulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(0, 255, 65, 0.35); }
+  50%      { box-shadow: 0 0 32px rgba(0, 255, 65, 0.65), 0 0 60px rgba(0, 255, 65, 0.2); }
+}
+
+/* ==============================
+   AI Chat Scrollbar
+   ============================== */
+.ai-chat-scrollbar::-webkit-scrollbar { width: 4px; }
+.ai-chat-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.ai-chat-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.2);
+  border-radius: 2px;
+}
+
+/* ==============================
+   Matrix Section Reveal — CLS-free initial state
+   الكونتنت كيبدا مخبي بـ CSS (ماشي GSAP) باش ما يبانش shift
+   ============================== */
+.matrix-reveal-content {
+  opacity: 0;
+  transform: translate3d(0, 80px, 0);
+  will-change: transform, opacity;
+}
+
+/* ==============================
    Hero Scan & Terminal Animations
    ============================== */
-
-/* الصورة كتبان من فوق لتحت بـ clip-path */
 @keyframes scanReveal {
-  0% {
-    clip-path: inset(0 0 100% 0);
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-  }
+  0% { clip-path: inset(0 0 100% 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }
 
-/* الخط الأخضر كيتحرك من فوق لتحت */
 @keyframes scanLineMove {
-  0% {
-    top: 0%;
-  }
-  100% {
-    top: 100%;
-  }
+  0% { top: 0%; }
+  100% { top: 100%; }
 }
 
-/* Cursor ديال التيرمينال كيرمش */
 @keyframes terminalBlink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-/* Grid overlay كيختفي مع الـ scan */
 @keyframes fadeOut {
-  0% {
-    opacity: 0.3;
-  }
-  80% {
-    opacity: 0.1;
-  }
-  100% {
-    opacity: 0;
-  }
+  0% { opacity: 0.3; }
+  80% { opacity: 0.1; }
+  100% { opacity: 0; }
 }
-
