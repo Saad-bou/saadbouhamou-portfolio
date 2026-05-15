@@ -60,8 +60,9 @@ export default function ScannedPhoto({
               src="/saadbouhamou.png"
               alt="Saad Bouhamou"
               fill
+              sizes="(max-width: 639px) 300px, 450px"
               className="object-contain"
-              priority
+              preload
             />
           </div>
 

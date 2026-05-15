@@ -13,7 +13,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; => Lenis كيدير smooth scrolling, ماخاصناش CSS يتعارض معاه */
 }
 
 body {
@@ -75,5 +75,4 @@ body {
     opacity: 0;
   }
 }
-
 

@@ -1,7 +1,9 @@
 import { GeistSans } from 'geist/font/sans';
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
-import CodeBackground from "@/components/layout/CodeBackground"; 
+import CodeBackground from "@/components/layout/CodeBackground";
+import SmoothScroll from "@/components/layout/SmoothScroll";
+import AIChatAgent from "@/components/ui/AIChatAgent";
 
 export const metadata = {
   title: "Saad Bouhamou | Full-stack Developer",
@@ -15,9 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body dir="ltr" className={`${GeistSans.className} bg-[#0a0a0a] text-[#fafafa] antialiased`} suppressHydrationWarning>
-        <CodeBackground />
-        <Navbar />
-        {children}
+        <SmoothScroll>
+          <CodeBackground />
+          <Navbar />
+          {children}
+          <AIChatAgent />
+        </SmoothScroll>
       </body>
     </html>
   );

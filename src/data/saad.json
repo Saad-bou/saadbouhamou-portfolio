@@ -1,0 +1,94 @@
+{
+  "name": "Saad Bouhamou",
+  "title": "Full-Stack Developer & Digital Craftsman",
+  "location": "Morocco",
+  "email": "bouhamousaad@gmail.com",
+  "languages_spoken": ["Arabic", "French", "English", "Darija (Moroccan Arabic)"],
+  "education": [
+    {
+      "institution": "ISMAGI",
+      "degree": "Bachelor in Computer Science / Web Development",
+      "location": "Morocco",
+      "description": "Studied computer science fundamentals, web technologies, and software engineering at ISMAGI (Institut Supérieur de Management et d'Informatique)"
+    }
+  ],
+  "skills": {
+    "frontend": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "HTML5", "CSS3", "JavaScript"],
+    "backend": ["Django", "Django REST Framework", "Python", "Node.js"],
+    "databases": ["PostgreSQL", "MySQL", "SQLite"],
+    "tools": ["Git", "GitHub", "Vercel", "Docker", "VS Code"],
+    "ai_ml": ["Vercel AI SDK", "Google Gemini", "OpenAI APIs"],
+    "design": ["Figma", "UI/UX Design", "Glassmorphism", "Matrix/Cyberpunk aesthetics"]
+  },
+  "projects": [
+    {
+      "name": "Le Petit Collège",
+      "category": "Education Platform",
+      "platform": "Wix",
+      "tech": ["JavaScript Vanilla", "Wix CMS", "Wix Velo"],
+      "description": "A full-featured education platform built for a school institution, enabling students and teachers to interact with learning content, manage courses, and access resources online.",
+      "highlights": ["Custom Wix Velo scripting", "Dynamic content management", "Responsive mobile-first design"]
+    },
+    {
+      "name": "Yamaha Morocco",
+      "category": "Corporate Website",
+      "client": "Mediazone Partner",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "description": "Official Yamaha Morocco landing page and product showcase, developed for Mediazone agency. Features immersive product presentation and smooth user experience."
+    },
+    {
+      "name": "JBL Morocco",
+      "category": "Product Showcase",
+      "client": "Mediazone Partner",
+      "tech": ["HTML5", "CSS3", "JavaScript", "AJAX"],
+      "description": "Interactive JBL product showcase with AJAX-powered dynamic content loading, built for the Moroccan market via Mediazone agency."
+    },
+    {
+      "name": "Samsung Morocco",
+      "category": "Product Landing",
+      "client": "Mediazone Partner",
+      "tech": ["HTML5", "CSS3", "JavaScript", "AJAX"],
+      "description": "Samsung product landing page for the Moroccan market, featuring dynamic product filtering and interactive UI components."
+    },
+    {
+      "name": "Asus Morocco",
+      "category": "Product Landing",
+      "client": "Mediazone Partner",
+      "tech": ["HTML5", "CSS3", "JavaScript", "AJAX"],
+      "description": "ASUS product showcase landing page developed for the Moroccan market, highlighting laptops and tech peripherals."
+    },
+    {
+      "name": "Pro - Mediazone Landing",
+      "category": "Agency Landing Page",
+      "client": "Mediazone",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "description": "A premium agency landing page for Mediazone, showcasing their digital marketing and development services."
+    },
+    {
+      "name": "Personal Portfolio",
+      "category": "Portfolio Website",
+      "tech": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "Lenis"],
+      "description": "This very portfolio you are browsing right now! Built with a Matrix/Cyberpunk aesthetic, featuring smooth scrolling, cinematic animations, and an AI chat twin. Showcases full-stack skills and creative vision."
+    }
+  ],
+  "experience": [
+    {
+      "company": "Mediazone",
+      "role": "Frontend Developer (Partner)",
+      "description": "Worked as a development partner delivering high-quality landing pages and product showcases for major brands including Yamaha, JBL, Samsung, and Asus in the Moroccan market."
+    }
+  ],
+  "personality": {
+    "style": "Professional yet approachable, creative, passionate about craft and detail",
+    "interests": ["AI & Machine Learning", "Cyberpunk aesthetics", "Open source", "Digital art", "Music"],
+    "values": ["Clean code", "Pixel-perfect design", "Performance", "User experience", "Continuous learning"],
+    "work_philosophy": "Every line of code is a chance to create something beautiful and functional. I bridge the gap between design vision and technical reality."
+  },
+  "ai_twin_persona": {
+    "name": "Saad's AI Twin",
+    "role": "Digital representative of Saad Bouhamou",
+    "capabilities": "Answers questions about Saad's skills, projects, education, and professional background",
+    "tone": "Smart, professional, friendly, and multilingual (English, French, Arabic, Moroccan Darija)",
+    "constraints": "Only answers based on the provided data about Saad. For sensitive or personal contact info, directs to official channels."
+  }
+}

@@ -7,10 +7,15 @@ const MATRIX_FONT_SIZE = 14;
 const MATRIX_RADIUS = 100;
 const TOUCH_DISMISS_MS = 2000;
 
+interface NavigatorWithDeviceMemory extends Navigator {
+  deviceMemory?: number;
+}
+
 export function useMatrixEffect(scanComplete: boolean) {
   const [isHovering, setIsHovering] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [, setIsTouchActive] = useState(false);
+  const [isTouchActive, setIsTouchActive] = useState(false);
+  const [isInView, setIsInView] = useState(true);
 
   const photoContainerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,13 +25,38 @@ export function useMatrixEffect(scanComplete: boolean) {
   const activePointRef = useRef<{ x: number; y: number } | null>(null);
   const touchDismissTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const roamingPointRef = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
+  const reduceEffectsRef = useRef(false);
 
   useEffect(() => {
+    const navigatorWithMemory = navigator as NavigatorWithDeviceMemory;
     isMobileDeviceRef.current = window.matchMedia("(pointer: coarse)").matches;
+    reduceEffectsRef.current =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      (navigatorWithMemory.deviceMemory !== undefined &&
+        navigatorWithMemory.deviceMemory <= 4);
+    
+    // Setup Intersection Observer to pause matrix when out of view
+    const container = photoContainerRef.current;
+    if (!container) return;
+    
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsInView(entry.isIntersecting);
+    }, { threshold: 0 });
+    
+    observer.observe(container);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!scanComplete) return;
+    if (
+      !scanComplete ||
+      !isInView ||
+      reduceEffectsRef.current ||
+      (!isHovering && !isTouchActive && !isMobileDeviceRef.current)
+    ) {
+      return;
+    }
+
     const canvas = canvasRef.current;
     const container = photoContainerRef.current;
     if (!canvas || !container) return;
@@ -79,10 +109,7 @@ export function useMatrixEffect(scanComplete: boolean) {
         roamingPointRef.current.tx = point.x;
         roamingPointRef.current.ty = point.y;
       } else {
-        if (!isMobileDeviceRef.current) {
-          frameId = requestAnimationFrame(draw);
-          return;
-        }
+        if (!isMobileDeviceRef.current) return;
 
         if (
           roamingPointRef.current.tx === 0 &&
@@ -151,8 +178,9 @@ export function useMatrixEffect(scanComplete: boolean) {
     return () => {
       cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-  }, [scanComplete]);
+  }, [scanComplete, isInView, isHovering, isTouchActive]);
 
   const handlePhotoMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
