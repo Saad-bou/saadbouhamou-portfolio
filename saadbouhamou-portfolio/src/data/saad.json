@@ -1,0 +1,72 @@
+{
+  "name": "Saad Bouhamou",
+  "title": "Full-Stack Developer & AI Strategist",
+  "location": "Rabat, Morocco",
+  "email": "bouhamousaad@gmail.com",
+  "phone": "+212 6 49 40 99 14",
+  "age": 25,
+  "date_of_birth": "May 22, 2001",
+  "github": "https://github.com/Saad-bou",
+  "linkedin": "https://www.linkedin.com/in/saad-bouhamou",
+  "portfolio": "saadbouhamou.dev",
+  "languages_spoken": ["Moroccan Darija", "Arabic", "English", "French"],
+  "education": [
+    {
+      "year": "2025 - 2026",
+      "institution": "ISMAGI",
+      "degree": "Licence Professionnelle en Développement Web et Mobile",
+      "description": "Completing a professional license focused on web and mobile development."
+    },
+    {
+      "degree": "Technicien Spécialisé in Computer Development",
+      "description": "Specialized technical training in computer development."
+    },
+    {
+      "year": "2019",
+      "degree": "Scientific Baccalaureate",
+      "location": "Rabat"
+    }
+  ],
+  "skills": {
+    "frontend": ["Django templates", "React", "Next.js", "Vue.js", "Tailwind CSS", "Three.js", "Scrolling animations", "3D web elements"],
+    "backend": ["Django", "Python", "SQL"],
+    "databases": ["Snowflake", "SQL"],
+    "automation": ["n8n", "Digital automation", "Workflow automation"],
+    "ai_media": ["Seedance", "Kling", "Magnific AI", "Vmake AI", "Roboneo AI", "Groq & Qwen"],
+    "tools": ["Cursor", "Git", "GitHub", "Canva"],
+    "hobbies": ["Bodybuilding", "Musculation"]
+  },
+  "projects": [
+    {
+      "name": "Explorateur de Données OpenData Maroc",
+      "date": "April 2026",
+      "category": "Data Engineering & Dashboard",
+      "tech": ["Django", "Snowflake"],
+      "description": "A data exploration project for Moroccan open data, built with Django and Snowflake for analysis and data management."
+    },
+    {
+      "name": "Personal Portfolio",
+      "category": "Personal Website & AI Twin",
+      "tech": ["Next.js", "Tailwind CSS", "Three.js", "Groq & Qwen"],
+      "description": "Personal portfolio focused on modern web craft, 3D elements, scrolling animations, and an AI Twin experience."
+    }
+  ],
+  "experience": [
+    {
+      "company": "Mediazone (Nethub)",
+      "role": "Front-End Developer Intern",
+      "period": "January 2025 - June 2025",
+      "description": "Front-end development internship focused on web interfaces and digital experiences."
+    },
+    {
+      "company": "École Privée Le Petit Collège",
+      "role": "IT and Data Management Agent",
+      "period": "September 2025 - December 2025",
+      "description": "Managed Wix transfer, Canva designs, and school data."
+    }
+  ],
+  "personality": {
+    "style": "Professional, concise, confident, polite, high-end web craftsman, AI engineer",
+    "work_philosophy": "Build polished digital experiences with strong attention to performance, design, automation, and practical AI workflows."
+  }
+}
