@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const groq = createGroq({ apiKey });
 
     const result = streamText({
-      model: groq('qwen/qwen3.6-27b'),
+      model: groq('qwen-3.6-27b'),
       providerOptions: {
         groq: {
           reasoningFormat: 'hidden',
