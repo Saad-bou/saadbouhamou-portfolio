@@ -16,10 +16,19 @@ function stripThinkingBlocks(text: string): string {
 }
 
 function getMessageText(msg: UIMessage): string {
-  const text = msg.parts
-    .filter((p) => p.type === 'text')
-    .map((p) => (p as { type: 'text'; text: string }).text)
-    .join('');
+  // 🚀 رجعنا msg عبارة عن any باش TypeScript يسكت ويقرا content و parts بلا صداع
+  const anyMsg = msg as any;
+
+  if (anyMsg.content) {
+    return stripThinkingBlocks(anyMsg.content);
+  }
+
+  const text = anyMsg.parts
+    ? anyMsg.parts
+        .filter((p: any) => p.type === 'text')
+        .map((p: any) => p.text)
+        .join('')
+    : '';
 
   return stripThinkingBlocks(text);
 }

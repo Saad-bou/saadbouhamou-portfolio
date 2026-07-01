@@ -14,11 +14,11 @@
     {
       "year": "2025 - 2026",
       "institution": "ISMAGI",
-      "degree": "Licence Professionnelle en Développement Web et Mobile",
+      "degree": "Licence Professionnelle en Developpement Web et Mobile",
       "description": "Completing a professional license focused on web and mobile development."
     },
     {
-      "degree": "Technicien Spécialisé in Computer Development",
+      "degree": "Technicien Specialise in Computer Development",
       "description": "Specialized technical training in computer development."
     },
     {
@@ -38,7 +38,7 @@
   },
   "projects": [
     {
-      "name": "Explorateur de Données OpenData Maroc",
+      "name": "Explorateur de Donnees OpenData Maroc",
       "date": "April 2026",
       "category": "Data Engineering & Dashboard",
       "tech": ["Django", "Snowflake"],
@@ -59,7 +59,7 @@
       "description": "Front-end development internship focused on web interfaces and digital experiences."
     },
     {
-      "company": "École Privée Le Petit Collège",
+      "company": "Ecole Privee Le Petit College",
       "role": "IT and Data Management Agent",
       "period": "September 2025 - December 2025",
       "description": "Managed Wix transfer, Canva designs, and school data."
