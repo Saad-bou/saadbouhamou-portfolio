@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     const groq = createGroq({ apiKey });
 
     const result = streamText({
-      model: groq("llama-3.1-8b-instant"),
+      model: groq('qwen/qwen3.6-27b'),
       system: SYSTEM_PROMPT,
       messages: modelMessages,
       maxOutputTokens: 500,
