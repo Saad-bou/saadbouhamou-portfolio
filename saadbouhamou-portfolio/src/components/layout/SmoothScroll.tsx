@@ -1,9 +1,14 @@
 "use client";
 
 import { ReactLenis, useLenis } from 'lenis/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useSyncExternalStore } from 'react';
+
+type ScrollTriggerPlugin = typeof import('gsap/ScrollTrigger')['ScrollTrigger'];
+
+// Set once the lazy gsap/ScrollTrigger bundle finishes loading, so the
+// Lenis bridge can forward frames to ScrollTrigger without gsap being
+// on the critical initial-load path.
+let scrollTriggerRef: ScrollTriggerPlugin | null = null;
 
 // ─── Lenis ↔ GSAP ScrollTrigger Bridge ──────────────────────────────────────
 // بدون هاد الـ Bridge، GSAP كيقرا window.scrollY بينما Lenis كيهضم
@@ -12,7 +17,9 @@ import { useEffect, useSyncExternalStore } from 'react';
 function LenisGSAPBridge() {
   // useLenis(callback) كيستدعي الـ callback فكل frame ديال Lenis
   // ScrollTrigger.update كيقول لـ GSAP يعيد يحسب الـ scroll position
-  useLenis(ScrollTrigger.update);
+  useLenis(() => {
+    scrollTriggerRef?.update();
+  });
   return null;
 }
 
@@ -35,12 +42,26 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     () => true
   );
 
+  // GSAP (~112KB) is fetched on demand — sections that need it pull the
+  // same singleton chunk; here we only register + refresh once it lands.
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.refresh();
+    let cancelled = false;
+
+    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+      ([gsapMod, stMod]) => {
+        if (cancelled) return;
+        const gsap = gsapMod.gsap ?? gsapMod.default;
+        const ScrollTrigger = stMod.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+        scrollTriggerRef = ScrollTrigger;
+        ScrollTrigger.refresh();
+      }
+    );
+
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      cancelled = true;
+      scrollTriggerRef?.getAll().forEach(t => t.kill());
+      scrollTriggerRef = null;
     };
   }, []);
 

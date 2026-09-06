@@ -2,11 +2,9 @@
 
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { Mail, MessageCircle } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useGsapScoped } from '@/lib/useGsapScoped';
 import { CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL, WHATSAPP_URL } from '@/lib/contact';
 
 // Terminal form (INITIALIZE_PROJECT.exe) is below the fold and heavy —
@@ -16,10 +14,6 @@ const ProjectInitializer = dynamic(
   { ssr: false, loading: () => <div className="min-h-[480px]" aria-hidden="true" /> }
 );
 
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 // ── Social link row ────────────────────────────────────────────────────────────
 interface SocialLinkProps {
@@ -116,7 +110,7 @@ export default function ContactSection() {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
   // GSAP heading entrance — exactly matching Projects/About sections
-  useGSAP(() => {
+  useGsapScoped(sectionRef, (gsap, ScrollTrigger) => {
     const heading = headingRef.current;
     const subtitle = subtitleRef.current;
 
@@ -146,7 +140,7 @@ export default function ContactSection() {
       })
         .to(subtitle, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, ease: 'power2.out' });
     }
-  }, { scope: sectionRef });
+  });
 
   return (
     <section

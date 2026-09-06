@@ -4,18 +4,12 @@ import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Cpu, Briefcase, GraduationCap } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import MatrixButtonCV from '@/components/ui/MatrixButtonCV';
+import { useGsapScoped } from '@/lib/useGsapScoped';
 import dynamic from 'next/dynamic';
 
 // Canvas + animation loop only needed once the About section is approached
 const MatrixPortalCanvas = dynamic(() => import('@/components/ui/MatrixPortalCanvas'), { ssr: false });
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const bioText = "I am an elite Full-Stack Developer & AI Strategist, blending precise engineering with premium visual aesthetics. Specializing in high-performance web applications, I architect digital experiences that feel alive. Drawing from my extensive background in developing scalable e-commerce platforms and engineering custom Vanilla JS web ecosystems, I seamlessly merge front-end mastery with AI-driven marketing strategies. From crafting high-conversion AI advertising campaigns to architecting robust backend data pipelines, my work is defined by an obsessive attention to detail, performance optimization, and a drive to push the boundaries of modern digital interactions.";
 
@@ -50,7 +44,7 @@ export default function AboutSystem() {
     if (isInView) setMatrixActive(true);
   }, [isInView]);
 
-  useGSAP(() => {
+  useGsapScoped(containerRef, (gsap, ScrollTrigger) => {
     const heading = headingRef.current;
     if (heading) {
       gsap.set(heading, { opacity: 0, y: 30, filter: 'blur(8px)', color: '#00FF41' });
@@ -71,8 +65,7 @@ export default function AboutSystem() {
       start: 'top 40%', // Triggers when the top of the section reaches 40% of the screen
       onEnter: () => setIsInView(true),
     });
-
-  }, { scope: containerRef });
+  });
 
   // Terminal log execution: fires after portal animation completes
   useEffect(() => {

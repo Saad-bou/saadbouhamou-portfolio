@@ -3,15 +3,8 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { ArrowUpRight } from 'lucide-react';
-
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { useGsapScoped } from '@/lib/useGsapScoped';
 
 const projects = [
   {
@@ -95,7 +88,7 @@ export default function Projects() {
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
 
-  useGSAP(() => {
+  useGsapScoped(containerRef, (gsap, ScrollTrigger) => {
     // ── Matrix Wave Reveal — العنوان كيتكشف مع موجة الماتريكس ─────────
     // لا text splitting — غير opacity + blur + color + skew = خفيف على الموبايل
     const heading = headingRef.current;
@@ -185,7 +178,7 @@ export default function Projects() {
 
     // 🔥 حيدنا Magnetic Snapping ScrollTrigger.create
     // Lenis كافي — 3 snap engines كانو كيتقاتلو على الموبايل
-  }, { scope: containerRef });
+  });
 
   return (
     <section
