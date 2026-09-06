@@ -93,8 +93,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* interactive-widget باش Android Chrome يعاود يحسب الـ viewport ملي الكيبورد تطلع */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
-        {/* Preload LCP hero image — browser يبدأ يحمّلها قبل JS يتحمّل */}
-        <link rel="preload" as="image" href="/saadbouhamou.webp" fetchPriority="high" />
+        {/* لا حاجة لـ preload يدوي للـ hero image: <Image priority> فـ ScannedPhoto كيولّد
+            preload للـ URL المحسّن (_next/image) أوتوماتيكياً — الـ preload اليدوي كان
+            كيحمّل الـ raw webp اللي المتصفح عمرو ما كيستعمل = warning "preloaded but unused" */}
       </head>
       <body
         dir="ltr"

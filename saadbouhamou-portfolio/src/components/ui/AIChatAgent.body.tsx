@@ -47,11 +47,15 @@ function TypingMessage({ content, isStreaming, onTick }: TypingMessageProps) {
 
   useEffect(() => {
     if (charIndex >= content.length) return;
+    // Reveal a chunk per frame instead of one char per 10ms timer —
+    // per-char setTimeout + onTick caused a full ChatBody re-render storm.
+    const CHARS_PER_TICK = 3;
     const id = setTimeout(() => {
-      setDisplayed(content.slice(0, charIndex + 1));
-      setCharIndex((i) => i + 1);
+      const next = Math.min(charIndex + CHARS_PER_TICK, content.length);
+      setDisplayed(content.slice(0, next));
+      setCharIndex(next);
       onTick?.();
-    }, 10);
+    }, 16);
     return () => clearTimeout(id);
   }, [charIndex, content, onTick]);
 
