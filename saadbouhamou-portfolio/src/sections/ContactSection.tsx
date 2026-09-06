@@ -1,109 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import dynamic from 'next/dynamic';
+import { Mail, MessageCircle } from 'lucide-react';
+import ProjectInitializer from '@/components/ui/ProjectInitializer';
+import { CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL, WHATSAPP_URL } from '@/lib/contact';
 
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
-}
-
-const Cal = dynamic(() => import('@calcom/embed-react'), { ssr: false });
-
-// ── Cal.com embed ─────────────────────────────────────────────────────────────
-function CalEmbed() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isInteractive, setIsInteractive] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsInView(true);
-      },
-      { rootMargin: '300px' }
-    );
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isInView) return;
-    (async function () {
-      try {
-        const { getCalApi } = await import('@calcom/embed-react');
-        const cal = await getCalApi({});
-        cal('ui', {
-          styles: { branding: { brandColor: '#00ff41' } },
-          hideEventTypeDetails: false,
-          layout: 'month_view',
-        });
-      } catch (error) {
-        console.error('Failed to load Cal API', error);
-      }
-    })();
-  }, [isInView]);
-
-  useEffect(() => {
-    if (!isInteractive) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsInteractive(false);
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isInteractive]);
-
-  return (
-    <div
-      ref={containerRef}
-      id="my-cal-inline"
-      className="relative w-full max-w-4xl mx-auto px-4 md:px-0 min-h-[600px] md:min-h-[650px] rounded-lg overflow-visible"
-      onMouseLeave={() => setIsInteractive(false)}
-    >
-      <div
-        className={`w-full h-full [&_iframe]:!bg-transparent [&_iframe]:!background-color-transparent ${
-          isInteractive ? '[&_iframe]:pointer-events-auto' : '[&_iframe]:pointer-events-none'
-        }`}
-      >
-        {isInView && (
-          <Cal
-            calLink="saadbouhamou.dev/30min"
-            style={{ width: '100%', height: '100%', border: 'none' }}
-            config={{ layout: 'month_view', theme: 'dark' }}
-          />
-        )}
-      </div>
-
-      {!isInteractive ? (
-        <button
-          type="button"
-          aria-label="Activate booking calendar"
-          onClick={() => setIsInteractive(true)}
-          className="absolute inset-0 z-10 flex items-start justify-end rounded-lg p-3 text-right outline-none focus-visible:ring-2 focus-visible:ring-[#00ff41]/60"
-          style={{ touchAction: 'pan-y' }}
-        >
-          <span className="rounded border border-[#00ff41]/25 bg-black/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#00ff41]/75 shadow-[0_0_18px_rgba(0,255,65,0.12)] backdrop-blur-sm transition-colors duration-200 hover:border-[#00ff41]/50 hover:text-[#00ff41]">
-            Click_To_Book
-          </span>
-        </button>
-      ) : (
-        <button
-          type="button"
-          aria-label="Return to page scrolling"
-          onClick={() => setIsInteractive(false)}
-          className="absolute right-3 top-3 z-20 rounded border border-white/10 bg-black/80 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/55 shadow-[0_0_18px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-colors duration-200 hover:border-[#00ff41]/40 hover:text-[#00ff41] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00ff41]/60"
-        >
-          Scroll_Page
-        </button>
-      )}
-    </div>
-  );
 }
 
 // ── Social link row ────────────────────────────────────────────────────────────
@@ -145,6 +53,51 @@ function SocialLinkRow({ label, href, handle, index }: SocialLinkProps) {
       >
         ↗
       </motion.span>
+    </motion.a>
+  );
+}
+
+// ── Direct channel row ────────────────────────────────────────────────────────
+interface DirectChannelProps {
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+  href: string;
+  ariaLabel: string;
+  index: number;
+}
+
+function DirectChannel({ icon, label, description, href, ariaLabel, index }: DirectChannelProps) {
+  return (
+    <motion.a
+      href={href}
+      target={href.startsWith('mailto:') ? undefined : '_blank'}
+      rel={href.startsWith('mailto:') ? undefined : 'noopener noreferrer'}
+      aria-label={ariaLabel}
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
+      className="group flex items-center gap-4 py-3.5 border-b border-white/[0.07]
+                 hover:border-[#00ff41]/30 transition-colors duration-300"
+    >
+      <span
+        className="flex items-center justify-center w-9 h-9 shrink-0 rounded-lg
+                   border border-[#00ff41]/20 bg-[#00ff41]/[0.04] text-[#00ff41]/60
+                   group-hover:text-[#00ff41] group-hover:border-[#00ff41]/40
+                   group-hover:shadow-[0_0_14px_rgba(0,255,65,0.15)]
+                   transition-all duration-300"
+      >
+        {icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block font-mono text-xs md:text-sm text-white/70 group-hover:text-white transition-colors duration-200 truncate">
+          {label}
+        </span>
+        <span className="block font-mono text-[10px] text-white/30 tracking-wide">
+          {description}
+        </span>
+      </span>
     </motion.a>
   );
 }
@@ -192,7 +145,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative w-full scroll-mt-28 py-24 px-4 md:px-8 max-w-7xl mx-auto z-10 [@media(min-width:1565px)]:max-w-[85vw] [@media(min-width:1565px)]:px-12 [@media(min-width:1565px)]:py-32 [@media(min-width:1800px)]:max-w-[85vw] [@media(min-width:1800px)]:px-[5vw] [@media(min-width:1800px)]:py-[6vw]"
+      className="relative w-full scroll-mt-28 py-24 px-4 md:px-8 max-w-7xl mx-auto z-10 overflow-x-clip [@media(min-width:1565px)]:max-w-[85vw] [@media(min-width:1565px)]:px-12 [@media(min-width:1565px)]:py-32 [@media(min-width:1800px)]:max-w-[85vw] [@media(min-width:1800px)]:px-[5vw] [@media(min-width:1800px)]:py-[6vw]"
     >
       <motion.div
         initial={{ scaleX: 0 }}
@@ -218,37 +171,30 @@ export default function ContactSection() {
           ref={subtitleRef}
           className="text-zinc-400 text-lg md:text-2xl max-w-3xl mx-auto font-mono [@media(min-width:1565px)]:text-3xl [@media(min-width:1565px)]:max-w-4xl [@media(min-width:1800px)]:text-[1.8vw] [@media(min-width:1800px)]:max-w-[50vw]"
         >
-          [SYSTEM] Ready to accept incoming requests —<br />
-          Book a call or reach out directly via the channels below.
+          [SYSTEM] Connection available.<br />
+          Let&apos;s build something exceptional.
+        </p>
+        <p className="mt-4 text-zinc-500 text-sm md:text-base max-w-2xl mx-auto font-mono">
+          Have a system to build, a problem to solve, or an idea to deploy?<br className="hidden sm:block" />
+          Initialize a connection and let&apos;s build it.
         </p>
       </div>
 
       {/* ════════════════════════════════
-          MIDDLE — Cal.com Booking Widget
+          MIDDLE — INITIALIZE_PROJECT.exe Terminal Panel
           ════════════════════════════════ */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="mb-20 md:mb-28 max-w-4xl mx-auto [@media(min-width:1800px)]:mb-[5vw]"
+        className="mb-20 md:mb-28 [@media(min-width:1800px)]:mb-[5vw]"
       >
-        <div
-          className="relative w-full rounded-lg border border-white/[0.07] overflow-hidden
-                     shadow-[0_0_60px_rgba(0,255,65,0.04),inset_0_0_40px_rgba(0,0,0,0.2)]"
-          style={{ background: 'transparent' }}
-        >
-          <span className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#00ff41]/30 pointer-events-none" />
-          <span className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#00ff41]/30 pointer-events-none" />
-          <span className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#00ff41]/30 pointer-events-none" />
-          <span className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#00ff41]/30 pointer-events-none" />
-
-          <CalEmbed />
-        </div>
+        <ProjectInitializer />
       </motion.div>
 
       {/* ════════════════════════════════
-          BOTTOM — Email + Socials Grid
+          BOTTOM — Direct Channels + Socials Grid
           ════════════════════════════════ */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-start">
         <motion.div
@@ -258,28 +204,33 @@ export default function ContactSection() {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         >
           <p className="font-mono text-[10px] md:text-[11px] text-white/30 tracking-[0.25em] uppercase mb-4">
-            Direct_Channel
+            Direct_Channels
           </p>
-          <a
-            href="mailto:bouhamousaad@gmail.com"
-            title="Email Saad Bouhamou - Open for Full-Stack & AI Opportunities"
-            className="group block text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white/80
-                       hover:text-white transition-colors duration-300 leading-snug break-all
-                       [@media(min-width:1565px)]:text-4xl [@media(min-width:1800px)]:text-[2.6vw]"
-          >
-            <span className="border-b border-transparent group-hover:border-[#00ff41]/50 transition-colors duration-300 pb-0.5">
-              bouhamousaad
-            </span>
-            <span className="text-[#00ff41]">@gmail.com</span>
-          </a>
 
-          <div className="flex items-center gap-2 mt-5">
+          <DirectChannel
+            index={0}
+            icon={<Mail className="w-4 h-4" />}
+            label={CONTACT_EMAIL}
+            description="Direct email • Fast response"
+            href={`mailto:${CONTACT_EMAIL}`}
+            ariaLabel={`Email Saad Bouhamou at ${CONTACT_EMAIL}`}
+          />
+          <DirectChannel
+            index={1}
+            icon={<MessageCircle className="w-4 h-4" />}
+            label="WhatsApp"
+            description="Quick chat • Direct connection"
+            href={WHATSAPP_URL}
+            ariaLabel="Message Saad Bouhamou on WhatsApp (opens in a new tab)"
+          />
+
+          <div className="flex items-center gap-2 mt-6">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff41] opacity-50" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00ff41]" />
             </span>
             <span className="font-mono text-[10px] text-[#00ff41]/60 tracking-widest">
-              AVAILABLE_FOR_PROJECTS
+              AVAILABLE_FOR_PROJECTS — Remote • Worldwide
             </span>
           </div>
         </motion.div>
@@ -298,13 +249,13 @@ export default function ContactSection() {
             <SocialLinkRow
               index={0}
               label="LinkedIn"
-              href="https://www.linkedin.com/in/saad-bouhamou-59278a3bb/"
+              href={LINKEDIN_URL}
               handle="/in/saad-bouhamou-59278a3bb"
             />
             <SocialLinkRow
               index={1}
               label="GitHub"
-              href="https://github.com/Saad-bou"
+              href={GITHUB_URL}
               handle="/Saad-bou"
             />
           </div>
