@@ -6,8 +6,15 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { Mail, MessageCircle } from 'lucide-react';
-import ProjectInitializer from '@/components/ui/ProjectInitializer';
+import dynamic from 'next/dynamic';
 import { CONTACT_EMAIL, LINKEDIN_URL, GITHUB_URL, WHATSAPP_URL } from '@/lib/contact';
+
+// Terminal form (INITIALIZE_PROJECT.exe) is below the fold and heavy —
+// fetched client-side only when the Contact section approaches the viewport.
+const ProjectInitializer = dynamic(
+  () => import('@/components/ui/ProjectInitializer'),
+  { ssr: false, loading: () => <div className="min-h-[480px]" aria-hidden="true" /> }
+);
 
 
 if (typeof window !== 'undefined') {

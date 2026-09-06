@@ -6,7 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import CodeBackground from "@/components/layout/CodeBackground";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 
-import AIChatAgent from "@/components/ui/AIChatAgent";
+import AIChatAgent from "@/components/ui/AIChatAgent.lazy";
 
 const SITE_URL = 'https://saadbouhamou.dev';
 

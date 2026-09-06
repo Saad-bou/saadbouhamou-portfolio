@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useChat } from '@ai-sdk/react';
 import { UIMessage } from 'ai';
 import { Send, Minimize2, X } from 'lucide-react';
+import Image from 'next/image';
 
 // â”€â”€â”€ Helper: extract text from UIMessage parts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -220,18 +221,17 @@ export default function ChatBody({
           <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 border-b border-[#00FF41]/20 bg-[#00FF41]/[0.04] shrink-0">
             <div className="flex items-center gap-3">
               {/* Avatar */}
-              <div className="relative w-8 h-8 rounded-full border border-[#00FF41]/50 bg-[#0a0a0a] flex items-center justify-center text-[#00FF41]">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  className="w-4 h-4"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-                </svg>
-                <span className="absolute -bottom-0.5 -right-0.5">
+              <div className="relative shrink-0">
+                <div className="relative w-9 h-9 rounded-full border border-emerald-500/40 shadow-[0_0_10px_rgba(16,185,129,0.2)] overflow-hidden bg-[#0a0a0a]">
+                  <Image
+                    src="/your-pixel-avatar.webp"
+                    alt="Saad Bouhamou AI Twin avatar"
+                    fill
+                    sizes="36px"
+                    className="object-cover contrast-125 brightness-110"
+                  />
+                </div>
+                <span className="absolute -bottom-0.5 -right-0.5 rounded-full bg-[#050505] p-[1.5px]">
                   <OnlineDot />
                 </span>
               </div>

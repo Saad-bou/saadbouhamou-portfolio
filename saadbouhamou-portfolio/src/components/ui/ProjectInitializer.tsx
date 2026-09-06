@@ -212,13 +212,12 @@ const project = {
             whileTap={{ scale: preparing ? 1 : 0.98 }}
             aria-label="Start a project — opens WhatsApp with your project details"
             className="
-              w-full flex items-center justify-center gap-2.5
-              bg-[#00ff41] text-black font-bold font-mono text-sm
-              tracking-[0.2em] uppercase rounded-lg py-3.5
+              group w-full flex items-center justify-center gap-2.5
+              bg-[#00ff41]/[0.06] text-[#00ff41] font-bold font-mono text-sm
+              tracking-[0.2em] uppercase border border-emerald-500/40 rounded-lg py-3.5
+              hover:bg-[#00ff41]/[0.12] hover:border-emerald-500/70
               disabled:opacity-80 disabled:cursor-wait
-              shadow-[0_0_24px_rgba(0,255,65,0.25)]
-              hover:shadow-[0_0_40px_rgba(0,255,65,0.45)]
-              transition-shadow duration-300
+              transition-colors duration-300
             "
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -230,7 +229,7 @@ const project = {
                   exit={{ opacity: 0 }}
                   className="flex items-center gap-2.5"
                 >
-                  <span className="w-4 h-4 border-2 border-black/40 border-t-black rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-[#00ff41]/40 border-t-[#00ff41] rounded-full animate-spin" />
                   [SYSTEM] Preparing connection...
                 </motion.span>
               ) : (
@@ -242,14 +241,12 @@ const project = {
                   className="flex items-center gap-2.5"
                 >
                   START A PROJECT
-                  <motion.span
-                    className="inline-flex"
-                    initial={false}
-                    whileHover={{ x: 4 }}
+                  <span
+                    className="inline-flex transition-transform duration-300 ease-out group-hover:translate-x-1"
                     aria-hidden="true"
                   >
                     <ArrowRight className="w-4 h-4" />
-                  </motion.span>
+                  </span>
                 </motion.span>
               )}
             </AnimatePresence>
