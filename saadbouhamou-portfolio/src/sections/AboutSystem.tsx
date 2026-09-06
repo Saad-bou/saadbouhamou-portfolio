@@ -6,10 +6,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Cpu, Briefcase, GraduationCap } from 'lucide-react';
 import MatrixButtonCV from '@/components/ui/MatrixButtonCV';
 import { useGsapScoped } from '@/lib/useGsapScoped';
+import { runWhenIdle } from '@/lib/defer';
 import dynamic from 'next/dynamic';
 
 // Canvas + animation loop only needed once the About section is approached
 const MatrixPortalCanvas = dynamic(() => import('@/components/ui/MatrixPortalCanvas'), { ssr: false });
+
+/**
+ * The canvas chunk previously fetched at hydration; it now waits for an idle
+ * frame (bounded at 1.5s) so the animation bundle never contends with the
+ * initial mobile paint. Rendering itself is unchanged.
+ */
+function DeferredMatrixPortalCanvas(
+  props: React.ComponentProps<typeof MatrixPortalCanvas>
+) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => runWhenIdle(() => setReady(true), 1500), []);
+  return ready ? <MatrixPortalCanvas {...props} /> : null;
+}
 
 const bioText = "I am an elite Full-Stack Developer & AI Strategist, blending precise engineering with premium visual aesthetics. Specializing in high-performance web applications, I architect digital experiences that feel alive. Drawing from my extensive background in developing scalable e-commerce platforms and engineering custom Vanilla JS web ecosystems, I seamlessly merge front-end mastery with AI-driven marketing strategies. From crafting high-conversion AI advertising campaigns to architecting robust backend data pipelines, my work is defined by an obsessive attention to detail, performance optimization, and a drive to push the boundaries of modern digital interactions.";
 
@@ -102,7 +116,7 @@ export default function AboutSystem() {
             <div className="sticky top-0 left-0 right-0 h-[100vh] overflow-hidden pointer-events-none">
               
               {/* Matrix Rain — absolute to the sticky container */}
-              <MatrixPortalCanvas isActive={matrixActive} />
+              <DeferredMatrixPortalCanvas isActive={matrixActive} />
 
               {/* Top Gate */}
               <motion.div
@@ -183,7 +197,7 @@ export default function AboutSystem() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 [@media(min-width:1800px)]:gap-[4vw] w-full items-stretch">
         
         {/* Permanent Background Matrix Rain (Low Power) */}
-        <MatrixPortalCanvas isActive={isInView} backgroundMode={true} />
+        <DeferredMatrixPortalCanvas isActive={isInView} backgroundMode={true} />
 
         {/* Profile Info & CV Button (Col 1 Row 1 on desktop) */}
         <motion.div 

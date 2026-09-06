@@ -1,46 +1,79 @@
 import { createGroq } from "@ai-sdk/groq";
-import { streamText, UIMessage, convertToModelMessages } from "ai";
-import { SYSTEM_PROMPT } from "@/lib/prompt";
+import { streamText, type UIMessage, convertToModelMessages } from "ai";
+import { twinKnowledge } from "@/lib/twin/knowledge";
+import { buildSystemPrompt } from "@/lib/twin/prompt";
+import { retrieveContext } from "@/lib/twin/retrieval";
+import {
+  validateChatRequest,
+  trimHistory,
+  latestUserText,
+} from "@/lib/twin/context";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
+const GROQ_MODEL = "openai/gpt-oss-20b";
+
 export async function POST(req: Request) {
   try {
-    // 🚀 لقطة مضمونة: كيقرا PRODUCTION إيلا كان، و fallback لـ الـ KEY العادي د الـ Local
-    const apiKey = process.env.GROQ_API_KEY_PRODUCTION || process.env.GROQ_API_KEY;
+    const apiKey =
+      process.env.GROQ_API_KEY_PRODUCTION || process.env.GROQ_API_KEY;
 
     if (!apiKey) {
-      console.error("[Chat API Error] Missing Groq API key in environment variables.");
-      return new Response(JSON.stringify({ error: "Missing Groq API key" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      });
+      // Safe logging only — never log message content or keys.
+      console.error("[Chat API] Missing Groq API key in environment.");
+      return Response.json(
+        {
+          error:
+            "The AI Twin is temporarily unavailable. Please try again later.",
+        },
+        { status: 500 }
+      );
     }
 
-    const { messages } = (await req.json()) as { messages: UIMessage[] };
-    console.log("Chat API received messages:", messages);
-    const modelMessages = await convertToModelMessages(messages);
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return Response.json(
+        { error: "Invalid request body." },
+        { status: 400 }
+      );
+    }
+
+    const validation = validateChatRequest(body, twinKnowledge.limits);
+    if (!validation.ok) {
+      return Response.json(
+        { error: validation.error },
+        { status: validation.status }
+      );
+    }
+
+    // Bound the conversation, then retrieve only relevant knowledge.
+    const trimmed = trimHistory(validation.messages, twinKnowledge.limits);
+    const retrieved = retrieveContext(twinKnowledge, latestUserText(trimmed));
+    const systemPrompt = buildSystemPrompt(twinKnowledge, retrieved.factIds);
+
+    const modelMessages = await convertToModelMessages(trimmed as UIMessage[]);
     const groq = createGroq({ apiKey });
 
     const result = streamText({
-      model: groq('openai/gpt-oss-20b'),
-      system: SYSTEM_PROMPT,
+      model: groq(GROQ_MODEL),
+      system: systemPrompt,
       messages: modelMessages,
-      maxOutputTokens: 500,
+      maxOutputTokens: twinKnowledge.limits.maxOutputTokens,
       onError: ({ error }) => {
-        console.error("Groq Stream Error (mid-stream):", error);
+        console.error("[Chat API] Groq stream error:", error);
       },
     });
 
-    // رجعنا لـ الكود الأصلي المستقر اللي كيموت عليه الـ Local
     return result.toUIMessageStreamResponse({ sendReasoning: false });
   } catch (error) {
-    console.error("Groq Stream Error:", error);
-    return new Response(
-      JSON.stringify({ error: (error as Error).message }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
+    console.error("[Chat API] Request failed:", (error as Error).message);
+    return Response.json(
+      { error: "Something went wrong. Please try again." },
+      { status: 500 }
     );
   }
 }

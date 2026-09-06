@@ -2,6 +2,7 @@
 
 import { ReactLenis, useLenis } from 'lenis/react';
 import { useEffect, useSyncExternalStore } from 'react';
+import { runWhenIdle } from '@/lib/defer';
 
 type ScrollTriggerPlugin = typeof import('gsap/ScrollTrigger')['ScrollTrigger'];
 
@@ -44,22 +45,27 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
   // GSAP (~112KB) is fetched on demand — sections that need it pull the
   // same singleton chunk; here we only register + refresh once it lands.
+  // The fetch is deferred to an idle frame so it never contends with the
+  // initial mobile paint/hydration.
   useEffect(() => {
     let cancelled = false;
 
-    Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
-      ([gsapMod, stMod]) => {
-        if (cancelled) return;
-        const gsap = gsapMod.gsap ?? gsapMod.default;
-        const ScrollTrigger = stMod.ScrollTrigger;
-        gsap.registerPlugin(ScrollTrigger);
-        scrollTriggerRef = ScrollTrigger;
-        ScrollTrigger.refresh();
-      }
-    );
+    const cancelIdle = runWhenIdle(() => {
+      Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+        ([gsapMod, stMod]) => {
+          if (cancelled) return;
+          const gsap = gsapMod.gsap ?? gsapMod.default;
+          const ScrollTrigger = stMod.ScrollTrigger;
+          gsap.registerPlugin(ScrollTrigger);
+          scrollTriggerRef = ScrollTrigger;
+          ScrollTrigger.refresh();
+        }
+      );
+    }, 500);
 
     return () => {
       cancelled = true;
+      cancelIdle();
       scrollTriggerRef?.getAll().forEach(t => t.kill());
       scrollTriggerRef = null;
     };

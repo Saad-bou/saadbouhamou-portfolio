@@ -1,0 +1,61 @@
+AI Twin evaluation — 60 cases, model openai/gpt-oss-20b
+
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] id-01-intro (IDENTITY) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199041, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] id-02-who (IDENTITY) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198713, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] id-03-engine (IDENTITY) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198459, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ex-01-mediazone (EXPERIENCE) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198130, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ex-02-lpc-fr (EXPERIENCE) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199738, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ex-03-lpc-dates (EXPERIENCE) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199410, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ex-04-mediazone-framing (EXPERIENCE) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199082, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ed-01-ismagi (EDUCATION) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198753, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)
+✗ [0/10] ed-02-licence (EDUCATION) — API error 429: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01krms1tkyfwh9vpznnrb38qg7` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198423, Req
+  …429 rate-limited, waiting 25s (attempt 1/6)
+  …429 rate-limited, waiting 25s (attempt 2/6)
+  …429 rate-limited, waiting 25s (attempt 3/6)
+  …429 rate-limited, waiting 25s (attempt 4/6)
+  …429 rate-limited, waiting 25s (attempt 5/6)

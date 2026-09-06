@@ -47,8 +47,51 @@
     {
       "name": "Personal Portfolio",
       "category": "Personal Website & AI Twin",
-      "tech": ["Next.js", "Tailwind CSS", "Three.js", "Groq & Qwen"],
+      "tech": ["Next.js", "Tailwind CSS", "Three.js", "Groq (GPT-OSS-20B)"],
       "description": "Personal portfolio focused on modern web craft, 3D elements, scrolling animations, and an AI Twin experience."
+    },
+    {
+      "name": "Le Petit College Platform",
+      "date": "2025 - 2026",
+      "category": "School Platform (Wix to Custom Migration)",
+      "tech": ["HTML", "Vanilla JS", "CSS"],
+      "url": "https://le-petit-college.vercel.app/",
+      "description": "Custom school platform replacing the school's Wix site: 17 independent HTML/Vanilla JS/CSS micro-section modules injected via iframes for full DOM control, 60fps animations with vanilla IntersectionObserver, plus 5 AI-assisted institutional videos."
+    },
+    {
+      "name": "JBL Mediazone",
+      "category": "Mediazone Partner Site",
+      "tech": ["HTML5", "CSS3", "JavaScript", "AJAX"],
+      "url": "https://www.mediazone.ma/jbl",
+      "description": "JBL partner site for Mediazone."
+    },
+    {
+      "name": "Samsung Mediazone",
+      "category": "Mediazone Partner Site",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "url": "https://www.mediazone.ma/samsung",
+      "description": "Samsung partner site for Mediazone."
+    },
+    {
+      "name": "Asus Mediazone",
+      "category": "Mediazone Partner Site",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "url": "https://assus-mediazone.vercel.app/",
+      "description": "Asus partner site for Mediazone."
+    },
+    {
+      "name": "Yamaha Mediazone",
+      "category": "Mediazone Partner Site",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "url": "https://yamaha-mediazone.vercel.app/",
+      "description": "Yamaha partner site for Mediazone."
+    },
+    {
+      "name": "Mediazone Pro Landing Page",
+      "category": "Mediazone Landing Page",
+      "tech": ["HTML5", "CSS3", "JavaScript"],
+      "url": "https://landing-page-media-zone.vercel.app/",
+      "description": "Mediazone landing page project."
     }
   ],
   "experience": [
@@ -56,13 +99,13 @@
       "company": "Mediazone (Nethub)",
       "role": "Front-End Developer Intern",
       "period": "January 2025 - June 2025",
-      "description": "Front-end development internship focused on web interfaces and digital experiences."
+      "description": "Architected & maintained 4 scalable e-commerce platforms. Executed advanced AJAX integrations and PHP backend scripting."
     },
     {
       "company": "Ecole Privee Le Petit College",
-      "role": "IT and Data Management Agent",
-      "period": "September 2025 - December 2025",
-      "description": "Managed Wix transfer, Canva designs, and school data."
+      "role": "IT & Data Management Agent, promoted to Full-Stack Developer & AI Marketer",
+      "period": "September 2025 - May 2026",
+      "description": "Managed the Wix-to-custom platform transfer, Canva designs and school data; handled database optimization, data indexing and server maintenance; engineered a premium Vanilla JS web platform and produced 6 high-conversion AI advertising videos."
     }
   ],
   "personality": {
