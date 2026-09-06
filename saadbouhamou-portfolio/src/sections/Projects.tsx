@@ -20,6 +20,7 @@ const projects = [
     category: 'Education Platform in wix',
     tech: ['JS vanila'],
     colSpan: 'col-span-12',
+    imgSizes: '(max-width: 1565px) 92vw, 1632px',
     image: '/projects/petit-college-vVIP.webp',
     mobileImage: '/projects/petit-college-vVIP.webp',
     aspect: 'aspect-[16/9] md:aspect-[1774/887]',
@@ -32,6 +33,7 @@ const projects = [
     category: 'Mediazone Partner',
     tech: ['HTML5', 'CSS3', 'JS'],
     colSpan: 'col-span-12 md:col-span-6',
+    imgSizes: '(max-width: 1280px) 45vw, 640px',
     image: '/projects/yamaha-desktop-vvip.webp',
     mobileImage: '/projects/yamaha-desktop-vvip.webp',
     aspect: 'aspect-[4/3] md:aspect-[16/9]',
@@ -43,6 +45,7 @@ const projects = [
     category: 'Mediazone Partner',
     tech: ['HTML5', 'CSS3', 'JS', 'AJAX'],
     colSpan: 'col-span-12 md:col-span-6',
+    imgSizes: '(max-width: 1280px) 45vw, 640px',
     image: '/projects/jblmatrix.webp',
     mobileImage: '/projects/jblmatrix.webp',
     aspect: 'aspect-[4/3] md:aspect-[16/9]',
@@ -54,6 +57,7 @@ const projects = [
     category: 'Mediazone Partner',
     tech: ['HTML5', 'CSS3', 'JS'],
     colSpan: 'col-span-12 md:col-span-4',
+    imgSizes: '(max-width: 1280px) 30vw, 500px',
     image: '/projects/samsungmatrix.webp',
     mobileImage: '/projects/samsungmatrix.webp',
     aspect: 'aspect-[4/3]',
@@ -65,6 +69,7 @@ const projects = [
     category: 'Mediazone Partner',
     tech: ['HTML5', 'CSS3', 'JS'],
     colSpan: 'col-span-12 md:col-span-4',
+    imgSizes: '(max-width: 1280px) 30vw, 500px',
     image: '/projects/assusmatrix.webp',
     mobileImage: '/projects/assusmatrix.webp',
     aspect: 'aspect-[4/3]',
@@ -76,6 +81,7 @@ const projects = [
     category: 'Mediazone Landing Page',
     tech: ['HTML5', 'CSS3', 'JS'],
     colSpan: 'col-span-12 md:col-span-4',
+    imgSizes: '(max-width: 1280px) 30vw, 500px',
     image: '/projects/promatrix.webp',
     mobileImage: '/projects/promatrix.webp',
     aspect: 'aspect-[4/3]',
@@ -226,7 +232,7 @@ export default function Projects() {
                 alt={`${project.title} - ${project.category} Portfolio Project`}
                 title={`${project.title} Mobile View - High Performance System Architecture`}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes={`(max-width: 767px) 100vw, 1px`}
                 quality={75}
                 className="object-contain object-center md:hidden"
                 loading="lazy"
@@ -238,7 +244,7 @@ export default function Projects() {
                 alt={`${project.title} - ${project.category} Desktop Preview`}
                 title={`${project.title} Desktop View - AI-Optimized Web Experience`}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes={`(max-width: 767px) 1px, ${project.imgSizes}`}
                 quality={75}
                 className="hidden md:block object-contain object-center"
                 loading="lazy"

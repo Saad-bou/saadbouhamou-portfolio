@@ -8,7 +8,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import MatrixButtonCV from '@/components/ui/MatrixButtonCV';
-import MatrixPortalCanvas from '@/components/ui/MatrixPortalCanvas';
+import dynamic from 'next/dynamic';
+
+// Canvas + animation loop only needed once the About section is approached
+const MatrixPortalCanvas = dynamic(() => import('@/components/ui/MatrixPortalCanvas'), { ssr: false });
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -187,7 +190,7 @@ export default function AboutSystem() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 [@media(min-width:1800px)]:gap-[4vw] w-full items-stretch">
         
         {/* Permanent Background Matrix Rain (Low Power) */}
-        <MatrixPortalCanvas isActive={true} backgroundMode={true} />
+        <MatrixPortalCanvas isActive={isInView} backgroundMode={true} />
 
         {/* Profile Info & CV Button (Col 1 Row 1 on desktop) */}
         <motion.div 

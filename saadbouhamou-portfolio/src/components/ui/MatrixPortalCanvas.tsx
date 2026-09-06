@@ -65,9 +65,7 @@ export default function MatrixPortalCanvas({
     }
 
     // ── Resize: 1x DPR (effect is 35% opacity, 2x is wasteful) ──
-    const resize = () => {
-      const w = fixed ? window.innerWidth : (c.parentElement?.getBoundingClientRect().width ?? window.innerWidth);
-      const h = fixed ? window.innerHeight : (c.parentElement?.getBoundingClientRect().height ?? window.innerHeight);
+    const applySize = (w: number, h: number) => {
       c.width = w;
       c.height = h;
       s.w = w;
@@ -80,11 +78,16 @@ export default function MatrixPortalCanvas({
       );
     };
 
-    resize();
-    const ro = new ResizeObserver(resize);
+    // ResizeObserver fires immediately on observe — sizing from its
+    // contentRect avoids a getBoundingClientRect forced reflow on mount.
+    const ro = new ResizeObserver((entries) => {
+      const rect = entries[0]?.contentRect;
+      if (rect && rect.width > 0 && rect.height > 0) applySize(rect.width, rect.height);
+    });
     // If fixed, observe the document root; else observe the parent
     const target = fixed ? document.documentElement : c.parentElement;
     if (target) ro.observe(target);
+    else applySize(window.innerWidth, window.innerHeight);
 
     // ── Animation loop ──
     const loop = (ts: number) => {
