@@ -38,12 +38,13 @@ const TIMELINES = [
 // ─── Field primitives ─────────────────────────────────────────────────────────
 
 const labelClass =
-  'flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-[#00ff41]/50';
+  'flex items-center gap-1.5 font-mono text-[10px] tracking-[0.2em] uppercase text-[#00ff41]/50 [@media(min-width:1800px)]:text-[0.65vw] [@media(min-width:1800px)]:gap-[0.5vw]';
 
 const inputClass =
   'w-full bg-black/50 border border-[#00ff41]/15 rounded-lg px-3.5 py-2.5 text-sm font-mono text-zinc-200 ' +
   'placeholder-zinc-600 outline-none transition-all duration-300 ' +
-  'focus:border-[#00ff41]/60 focus:shadow-[0_0_14px_rgba(0,255,65,0.1)] focus:bg-black/70';
+  'focus:border-[#00ff41]/60 focus:shadow-[0_0_14px_rgba(0,255,65,0.1)] focus:bg-black/70 ' +
+  '[@media(min-width:1800px)]:text-[1vw] [@media(min-width:1800px)]:px-[1.2vw] [@media(min-width:1800px)]:py-[0.8vw] [@media(min-width:1800px)]:rounded-[0.6vw]';
 
 interface SelectFieldProps {
   id: string;
@@ -114,7 +115,8 @@ export default function ProjectInitializer() {
     <div
       className="relative w-full max-w-4xl mx-auto rounded-2xl border border-[#00ff41]/25
                  bg-[#020402]/90 overflow-hidden
-                 shadow-[0_0_60px_rgba(0,255,65,0.08),0_8px_40px_rgba(0,0,0,0.6)]"
+                 shadow-[0_0_60px_rgba(0,255,65,0.08),0_8px_40px_rgba(0,0,0,0.6)]
+                 [@media(min-width:1800px)]:max-w-[55vw] [@media(min-width:1800px)]:rounded-[1.2vw]"
     >
       {/* Technical corner details */}
       <span className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#00ff41]/50 pointer-events-none" />
@@ -122,22 +124,22 @@ export default function ProjectInitializer() {
       <span className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#00ff41]/50 pointer-events-none" />
       <span className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#00ff41]/50 pointer-events-none" />
 
-      {/* ── Header ─────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#00ff41]/15 bg-[#00ff41]/[0.03]">
-        <span className="font-mono text-xs sm:text-sm tracking-[0.2em] text-[#00ff41]/90">
+      {/* ── Header ────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between px-5 sm:px-7 py-4 border-b border-[#00ff41]/15 bg-[#00ff41]/[0.03] [@media(min-width:1800px)]:px-[2.5vw] [@media(min-width:1800px)]:py-[1.2vw]">
+        <span className="font-mono text-xs sm:text-sm tracking-[0.2em] text-[#00ff41]/90 [@media(min-width:1800px)]:text-[1vw]">
           INITIALIZE_PROJECT.exe
         </span>
-        <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-[#00ff41]/60">
-          <span className="relative flex h-2 w-2">
+        <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] text-[#00ff41]/60 [@media(min-width:1800px)]:text-[0.7vw] [@media(min-width:1800px)]:gap-[0.6vw]">
+          <span className="relative flex h-2 w-2 [@media(min-width:1800px)]:h-[0.7vw] [@media(min-width:1800px)]:w-[0.7vw]">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff41] opacity-50" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00ff41]" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00ff41] [@media(min-width:1800px)]:h-[0.7vw] [@media(min-width:1800px)]:w-[0.7vw]" />
           </span>
           SYSTEM_READY
         </span>
       </div>
 
-      {/* ── Form body ──────────────────────────────────────────────── */}
-      <div className="relative px-5 sm:px-7 py-6 sm:py-7">
+      {/* ── Form body ────────────────────────────────────────────── */}
+      <div className="relative px-5 sm:px-7 py-6 sm:py-7 [@media(min-width:1800px)]:px-[2.5vw] [@media(min-width:1800px)]:py-[2vw]">
         {/* Decorative code — very low contrast, hidden on mobile */}
         <pre
           aria-hidden="true"
@@ -156,7 +158,7 @@ const project = {
           {/* Name / Company */}
           <div className="flex flex-col gap-1.5">
             <label htmlFor="pi-name" className={labelClass}>
-              <User className="w-3 h-3" aria-hidden="true" />
+              <User className="w-3 h-3 [@media(min-width:1800px)]:w-[0.9vw] [@media(min-width:1800px)]:h-[0.9vw]" aria-hidden="true" />
               Your Name / Company
             </label>
             <input
@@ -174,7 +176,7 @@ const project = {
           <SelectField
             id="pi-type"
             label="Project Type"
-            icon={<Code2 className="w-3 h-3" aria-hidden="true" />}
+            icon={<Code2 className="w-3 h-3 [@media(min-width:1800px)]:w-[0.9vw] [@media(min-width:1800px)]:h-[0.9vw]" aria-hidden="true" />}
             value={projectType}
             onChange={setProjectType}
             options={PROJECT_TYPES}
@@ -182,11 +184,11 @@ const project = {
           />
 
           {/* Budget + Timeline */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 [@media(min-width:1800px)]:gap-[1.5vw]">
             <SelectField
               id="pi-budget"
               label="Budget Range"
-              icon={<Coins className="w-3 h-3" aria-hidden="true" />}
+              icon={<Coins className="w-3 h-3 [@media(min-width:1800px)]:w-[0.9vw] [@media(min-width:1800px)]:h-[0.9vw]" aria-hidden="true" />}
               value={budget}
               onChange={setBudget}
               options={BUDGETS}
@@ -195,7 +197,7 @@ const project = {
             <SelectField
               id="pi-timeline"
               label="Timeline"
-              icon={<Clock className="w-3 h-3" aria-hidden="true" />}
+              icon={<Clock className="w-3 h-3 [@media(min-width:1800px)]:w-[0.9vw] [@media(min-width:1800px)]:h-[0.9vw]" aria-hidden="true" />}
               value={timeline}
               onChange={setTimeline}
               options={TIMELINES}
@@ -218,6 +220,7 @@ const project = {
               hover:bg-[#00ff41]/[0.12] hover:border-emerald-500/70
               disabled:opacity-80 disabled:cursor-wait
               transition-colors duration-300
+              [@media(min-width:1800px)]:text-[1vw] [@media(min-width:1800px)]:py-[1.2vw] [@media(min-width:1800px)]:rounded-[0.6vw] [@media(min-width:1800px)]:gap-[1vw]
             "
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -229,7 +232,7 @@ const project = {
                   exit={{ opacity: 0 }}
                   className="flex items-center gap-2.5"
                 >
-                  <span className="w-4 h-4 border-2 border-[#00ff41]/40 border-t-[#00ff41] rounded-full animate-spin" />
+                  <span className="w-4 h-4 border-2 border-[#00ff41]/40 border-t-[#00ff41] rounded-full animate-spin [@media(min-width:1800px)]:w-[1.2vw] [@media(min-width:1800px)]:h-[1.2vw]" />
                   [SYSTEM] Preparing connection...
                 </motion.span>
               ) : (
@@ -245,7 +248,7 @@ const project = {
                     className="inline-flex transition-transform duration-300 ease-out group-hover:translate-x-1"
                     aria-hidden="true"
                   >
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 [@media(min-width:1800px)]:w-[1.2vw] [@media(min-width:1800px)]:h-[1.2vw]" />
                   </span>
                 </motion.span>
               )}
@@ -254,17 +257,16 @@ const project = {
         </div>
       </div>
 
-      {/* ── Footer status ──────────────────────────────────────────── */}
-      <div className="flex items-center justify-between px-5 sm:px-7 py-3 border-t border-[#00ff41]/15 bg-black/40">
-        <span className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest text-[#00ff41]/45">
-          <ShieldCheck className="w-3 h-3" aria-hidden="true" />
+      {/* ── Footer status ────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between px-5 sm:px-7 py-3 border-t border-[#00ff41]/15 bg-black/40 [@media(min-width:1800px)]:px-[2.5vw] [@media(min-width:1800px)]:py-[1vw]">
+        <span className="flex items-center gap-1.5 font-mono text-[10px] tracking-widest text-[#00ff41]/45 [@media(min-width:1800px)]:text-[0.7vw] [@media(min-width:1800px)]:gap-[0.5vw]">
+          <ShieldCheck className="w-3 h-3 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" aria-hidden="true" />
           Connection secure
         </span>
-        <span className="font-mono text-[10px] tracking-widest text-white/30">
+        <span className="font-mono text-[10px] tracking-widest text-white/30 [@media(min-width:1800px)]:text-[0.7vw]">
           24h response
         </span>
       </div>
     </div>
   );
 }
-

@@ -189,7 +189,7 @@ export default function ContactSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="mb-20 md:mb-28 [@media(min-width:1800px)]:mb-[5vw]"
+        className="mb-20 md:mb-28 [@media(min-width:1800px)]:mb-[8vw] [@media(min-width:1800px)]:mt-[2vw]"
       >
         <ProjectInitializer />
       </motion.div>

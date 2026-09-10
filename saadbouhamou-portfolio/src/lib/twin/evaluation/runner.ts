@@ -167,11 +167,26 @@ async function main() {
     process.exit(1);
   }
 
-  const model = 'openai/gpt-oss-20b';
-  console.log(`AI Twin evaluation — ${evalCases.length} cases, model ${model}\n`);
+  // Optional partial run: TWIN_EVAL_ONLY="case-id-1,case-id-2" re-runs a
+  // subset (e.g. cases that failed on transient network/API errors) without
+  // burning the full daily token budget.
+  const only = process.env.TWIN_EVAL_ONLY;
+  const cases = only
+    ? evalCases.filter((c) => only.split(',').map((s) => s.trim()).includes(c.id))
+    : evalCases;
+  if (cases.length === 0) {
+    console.error('No cases match TWIN_EVAL_ONLY.');
+    process.exit(1);
+  }
+
+  // Production parity by default; EVAL_MODEL only exists so the suite can run
+  // when the production model's tokens-per-day bucket is exhausted (Groq TPD
+  // is per-model and can take hours to reset).
+  const model = process.env.EVAL_MODEL || 'openai/gpt-oss-20b';
+  console.log(`AI Twin evaluation — ${cases.length} cases, model ${model}\n`);
 
   const results: CaseResult[] = [];
-  for (const testCase of evalCases) {
+  for (const testCase of cases) {
     // Retrieval runs exactly like the production route.
     const { factIds } = retrieveContext(twinKnowledge, testCase.input);
     const systemPrompt = buildSystemPrompt(twinKnowledge, factIds);

@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // Registered custom image qualities to eliminate Next.js warnings
+    qualities: [45, 50, 75, 78, 82, 90],
     // Extra 500px breakpoint so desktop project cards (~387–499px rendered)
     // stop falling through to the 640px device-size step.
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 500],
