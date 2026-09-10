@@ -214,6 +214,30 @@ export default function Projects() {
   const [orbitRadius, setOrbitRadius] = useState(220);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Touch gesture prevention state
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLButtonElement>) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLButtonElement>) => {
+    if (!touchStartRef.current) return;
+
+    const deltaX = Math.abs(e.touches[0].clientX - touchStartRef.current.x);
+    const deltaY = Math.abs(e.touches[0].clientY - touchStartRef.current.y);
+
+    // If gesture is purely horizontal, prevent default to block vertical page drift
+    if (deltaX > deltaY) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+    }
+  }, []);
+
   // Orbit rotation animation state
   const orbitAngleRef = useRef(0);
   const rafRef = useRef<number>(0);
@@ -878,6 +902,8 @@ export default function Projects() {
                 key={proj.id}
                 type="button"
                 onClick={() => selectProject(i)}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
                 aria-label={`Select ${proj.title} project`}
                 aria-pressed={isActive}
                 className={`flex-shrink-0 snap-center w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
