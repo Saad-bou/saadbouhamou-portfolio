@@ -214,30 +214,6 @@ export default function Projects() {
   const [orbitRadius, setOrbitRadius] = useState(220);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Touch gesture prevention state
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-
-  const handleTouchStart = useCallback((e: React.TouchEvent<HTMLButtonElement>) => {
-    touchStartRef.current = {
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY,
-    };
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLButtonElement>) => {
-    if (!touchStartRef.current) return;
-
-    const deltaX = Math.abs(e.touches[0].clientX - touchStartRef.current.x);
-    const deltaY = Math.abs(e.touches[0].clientY - touchStartRef.current.y);
-
-    // If gesture is purely horizontal, prevent default to block vertical page drift
-    if (deltaX > deltaY) {
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-    }
-  }, []);
-
   // Orbit rotation animation state
   const orbitAngleRef = useRef(0);
   const rafRef = useRef<number>(0);
@@ -520,9 +496,9 @@ export default function Projects() {
               <span className="block text-[9px] text-zinc-500 uppercase tracking-wider [@media(min-width:1800px)]:text-[0.6vw]">PROTOCOL</span>
               <span className="text-white font-bold tracking-widest [@media(min-width:1800px)]:text-[0.8vw]">HTTPS // TLS3</span>
             </div>
-            <div className="col-span-2 sm:col-span-1 p-2.5 rounded border border-[#00ff41]/20 bg-black/50 backdrop-blur-sm [@media(min-width:1800px)]:p-[1vw]">
+            <div className="col-span-2 sm:col-span-1 p-2.5 rounded border border-[#00ff41]/20 bg-black/50 backdrop-blur-sm flex flex-col items-center justify-center text-center w-full [@media(min-width:1800px)]:p-[1vw]">
               <span className="block text-[9px] text-zinc-500 uppercase tracking-wider mb-0.5 [@media(min-width:1800px)]:text-[0.6vw]">STATUS</span>
-              <span className="flex items-center gap-1.5 text-[#00ff41] font-bold tracking-widest [@media(min-width:1800px)]:text-[0.8vw] [@media(min-width:1800px)]:gap-[0.5vw]">
+              <span className="flex items-center justify-center gap-1.5 w-full mx-auto text-[#00ff41] font-bold tracking-widest [@media(min-width:1800px)]:text-[0.8vw] [@media(min-width:1800px)]:gap-[0.5vw]">
                 <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" />
                 <span>100% SECURE</span>
               </span>
@@ -858,9 +834,33 @@ export default function Projects() {
             <Terminal className="w-3.5 h-3.5 text-[#00FF41]" />
             <span className="text-[#00FF41]">PROJECT REGISTRY</span>
           </div>
-          <span className="hidden sm:inline text-zinc-500">
-            {mounted && isMobile ? 'SWIPE HORIZONTALLY' : 'USE ARROWS TO NAVIGATE'}
-          </span>
+
+          {/* Mobile HUD Nav Buttons — inline in header, hidden on desktop */}
+          {mounted && isMobile && (
+            <div className="flex items-center gap-1.5 sm:hidden">
+              <button
+                type="button"
+                onClick={() => scrollCarousel('prev')}
+                aria-label="Previous project"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded border border-[#00ff41]/30 bg-black/60 text-[#00ff41] font-mono text-[9px] font-bold tracking-widest uppercase hover:bg-[#00ff41]/20 hover:border-[#00ff41]/60 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] active:scale-95 transition-all duration-200"
+              >
+                <ChevronLeft className="w-3 h-3" />
+                PREV
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollCarousel('next')}
+                aria-label="Next project"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded border border-[#00ff41]/30 bg-black/60 text-[#00ff41] font-mono text-[9px] font-bold tracking-widest uppercase hover:bg-[#00ff41]/20 hover:border-[#00ff41]/60 hover:shadow-[0_0_10px_rgba(0,255,65,0.3)] active:scale-95 transition-all duration-200"
+              >
+                NEXT
+                <ChevronRight className="w-3 h-3" />
+              </button>
+            </div>
+          )}
+
+          {/* Desktop hint — hidden on mobile */}
+          <span className="hidden sm:inline text-zinc-500">USE ARROWS TO NAVIGATE</span>
         </div>
 
         {/* Desktop Arrow Navigation */}
@@ -885,12 +885,18 @@ export default function Projects() {
           </>
         )}
 
-        {/* Horizontal Scroll Container — touch swipe on mobile, arrow nav on desktop */}
+        {/* Horizontal Scroll Container
+             – Mobile: overflow-hidden + touch-none → button-only navigation
+             – Desktop: overflow-x-auto + arrow buttons */}
         <div
           ref={carouselRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 scroll-smooth scrollbar-hide overscroll-x-contain snap-x snap-mandatory scroll-px-4 touch-pan-x select-none"
+          className={`flex gap-3 md:gap-4 pb-4 scroll-smooth scrollbar-hide snap-x snap-mandatory scroll-px-4 select-none ${
+            mounted && isMobile
+              ? 'overflow-hidden touch-none'
+              : 'overflow-x-auto overscroll-x-contain touch-pan-x'
+          }`}
           style={{
-            WebkitOverflowScrolling: 'touch',
+            WebkitOverflowScrolling: mounted && !isMobile ? 'touch' : 'auto',
             willChange: 'transform',
           }}
         >
@@ -902,8 +908,6 @@ export default function Projects() {
                 key={proj.id}
                 type="button"
                 onClick={() => selectProject(i)}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
                 aria-label={`Select ${proj.title} project`}
                 aria-pressed={isActive}
                 className={`flex-shrink-0 snap-center w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
