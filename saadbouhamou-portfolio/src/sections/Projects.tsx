@@ -863,9 +863,10 @@ export default function Projects() {
         {/* Horizontal Scroll Container — touch swipe on mobile, arrow nav on desktop */}
         <div
           ref={carouselRef}
-          className={`flex gap-3 md:gap-4 overflow-x-auto pb-4 scrollbar-hide overscroll-x-contain select-none ${mounted && isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
+          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 scrollbar-hide overscroll-x-contain touch-pan-x select-none"
           style={{
             WebkitOverflowScrolling: 'touch',
+            willChange: 'transform',
           }}
         >
           {projects.map((proj, i) => {
@@ -891,22 +892,22 @@ export default function Projects() {
                 }}
               >
                 {/* Thumbnail Image */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-black">
+                <div className="relative aspect-[16/10] overflow-hidden bg-black pointer-events-none">
                   <Image
                     src={proj.image}
                     alt={`${proj.title} thumbnail`}
                     fill
                     sizes="(max-width: 640px) 160px, (max-width: 768px) 190px, 220px"
                     quality={50}
-                    className="object-cover transition-transform duration-500 group-hover/card:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover/card:scale-105 pointer-events-none"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 cyber-scanlines opacity-25 pointer-events-none" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                   <HudCorner pos="tl" size={8} strokeWidth={1.2} color={proj.brandColor} />
                   <HudCorner pos="tr" size={8} strokeWidth={1.2} color={proj.brandColor} />
                   <div
-                    className="absolute top-2 left-2 px-1.5 py-0.5 rounded font-mono text-[8px] font-bold border backdrop-blur-md [@media(min-width:1800px)]:text-[0.55vw] [@media(min-width:1800px)]:px-[0.6vw]"
+                    className="absolute top-2 left-2 px-1.5 py-0.5 rounded font-mono text-[8px] font-bold border backdrop-blur-md pointer-events-none [@media(min-width:1800px)]:text-[0.55vw] [@media(min-width:1800px)]:px-[0.6vw]"
                     style={{
                       borderColor: `${proj.brandColor}60`,
                       backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -918,9 +919,9 @@ export default function Projects() {
                 </div>
 
                 {/* Card Info */}
-                <div className="p-3 bg-black/90 [@media(min-width:1800px)]:p-[1vw]">
+                <div className="p-3 bg-black/90 pointer-events-none [@media(min-width:1800px)]:p-[1vw]">
                   <p
-                    className="text-xs sm:text-sm font-bold truncate transition-colors duration-200 [@media(min-width:1800px)]:text-[0.8vw]"
+                    className="text-xs sm:text-sm font-bold truncate transition-colors duration-200 pointer-events-none [@media(min-width:1800px)]:text-[0.8vw]"
                     style={{
                       color: isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.8)',
                     }}
@@ -928,13 +929,13 @@ export default function Projects() {
                     {proj.title}
                   </p>
                   <p
-                    className="text-[9px] sm:text-[10px] font-mono truncate mt-0.5 [@media(min-width:1800px)]:text-[0.6vw]"
+                    className="text-[9px] sm:text-[10px] font-mono truncate mt-0.5 pointer-events-none [@media(min-width:1800px)]:text-[0.6vw]"
                     style={{ color: `${proj.brandColor}CC` }}
                   >
                     {proj.category}
                   </p>
                   <span
-                    className="inline-block mt-1.5 px-1.5 py-0.5 rounded border font-mono text-[7.5px] sm:text-[8px] font-bold tracking-wider uppercase [@media(min-width:1800px)]:text-[0.55vw] [@media(min-width:1800px)]:px-[0.6vw]"
+                    className="inline-block mt-1.5 px-1.5 py-0.5 rounded border font-mono text-[7.5px] sm:text-[8px] font-bold tracking-wider uppercase pointer-events-none [@media(min-width:1800px)]:text-[0.55vw] [@media(min-width:1800px)]:px-[0.6vw]"
                     style={{
                       borderColor: `${proj.brandColor}40`,
                       color: `${proj.brandColor}CC`,
