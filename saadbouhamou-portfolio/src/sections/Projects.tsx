@@ -863,9 +863,8 @@ export default function Projects() {
         {/* Horizontal Scroll Container — touch swipe on mobile, arrow nav on desktop */}
         <div
           ref={carouselRef}
-          className={`flex gap-3 md:gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory select-none ${mounted && isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
+          className={`flex gap-3 md:gap-4 overflow-x-auto pb-4 scrollbar-hide overscroll-x-contain select-none ${mounted && isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
           style={{
-            scrollSnapType: 'x mandatory',
             WebkitOverflowScrolling: 'touch',
           }}
         >
@@ -879,7 +878,7 @@ export default function Projects() {
                 onClick={() => selectProject(i)}
                 aria-label={`Select ${proj.title} project`}
                 aria-pressed={isActive}
-                className={`flex-shrink-0 w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left snap-start cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
+                className={`flex-shrink-0 w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
                   ? 'scale-[1.02] opacity-100 z-10'
                   : 'opacity-65 hover:opacity-95 hover:scale-[1.01]'
                   }`}
