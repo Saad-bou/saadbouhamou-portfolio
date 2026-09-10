@@ -56,60 +56,22 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 5,
-    title: 'Asus',
-    category: 'Hardware & ROG Showcase',
-    description: 'Asus gaming and commercial tech showcase for Mediazone featuring cutting-edge hardware matrices and high-contrast cyberpunk styling.',
-    tech: ['HTML5', 'CSS3', 'JS', 'Hardware UI'],
-    image: '/projects/assusmatrix.webp',
-    link: 'https://assus-mediazone.vercel.app/',
-    brandColor: '#FF0055',
-    glowColor: 'rgba(255, 0, 85, 0.45)',
-    securityLevel: 'SYS.LEVEL // 05 (ROG SECURE)',
-    nodeHash: '0x99AA',
-    launchDate: '04/2025',
-    stats: {
-      perf: 'OVERCLOCKED',
-      latency: '0.02MS',
-      security: 'SHIELDED',
-    },
-  },
-  {
-    id: 4,
-    title: 'Samsung',
-    category: 'E-commerce Partner',
-    description: 'Samsung partner ecosystem portal featuring modern high-density hardware layouts, responsive product matrices, and interactive UI nodes.',
-    tech: ['HTML5', 'CSS3', 'JS', 'UI Craft'],
-    image: '/projects/samsungmatrix.webp',
-    link: 'https://www.mediazone.ma/samsung',
-    brandColor: '#38BDF8',
-    glowColor: 'rgba(56, 189, 248, 0.45)',
-    securityLevel: 'SYS.LEVEL // 05 (ACTIVE)',
-    nodeHash: '0x2D90',
-    launchDate: '03/2025',
+    id: 2,
+    title: 'Yamaha',
+    category: 'E-commerce Platform',
+    description: 'Yamaha partner e-commerce platform for Mediazone — engineered for ultra-fast catalog discovery, streamlined checkout, and high conversion.',
+    tech: ['HTML5', 'CSS3', 'JavaScript', 'E-commerce'],
+    image: '/projects/yamaha-desktop-vvip.webp',
+    link: 'https://yamaha-mediazone.vercel.app/',
+    brandColor: '#00E5FF',
+    glowColor: 'rgba(0, 229, 255, 0.45)',
+    securityLevel: 'SYS.LEVEL // 04 (SECURED)',
+    nodeHash: '0x3B19',
+    launchDate: '01/2025',
     stats: {
       perf: '60 FPS',
-      latency: '0.15MS',
-      security: 'VERIFIED',
-    },
-  },
-  {
-    id: 6,
-    title: 'Mediazone Pro',
-    category: 'B2B Solutions & Landing',
-    description: 'Professional B2B digital portal engineered for enterprise solutions, service showcases, and client conversion workflows.',
-    tech: ['HTML5', 'CSS3', 'JS', 'Enterprise Stack'],
-    image: '/projects/promatrix.webp',
-    link: 'https://landing-page-media-zone.vercel.app/',
-    brandColor: '#A855F7',
-    glowColor: 'rgba(168, 85, 247, 0.45)',
-    securityLevel: 'SYS.LEVEL // 04 (ENTERPRISE)',
-    nodeHash: '0x4F18',
-    launchDate: '04/2025',
-    stats: {
-      perf: 'OPTIMIZED',
-      latency: '0.09MS',
-      security: 'ENTERPRISE',
+      latency: '0.12MS',
+      security: 'AUTHENTICATED',
     },
   },
   {
@@ -132,22 +94,60 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 2,
-    title: 'Yamaha',
-    category: 'E-commerce Platform',
-    description: 'Yamaha partner e-commerce platform for Mediazone — engineered for ultra-fast catalog discovery, streamlined checkout, and high conversion.',
-    tech: ['HTML5', 'CSS3', 'JavaScript', 'E-commerce'],
-    image: '/projects/yamaha-desktop-vvip.webp',
-    link: 'https://yamaha-mediazone.vercel.app/',
-    brandColor: '#00E5FF',
-    glowColor: 'rgba(0, 229, 255, 0.45)',
-    securityLevel: 'SYS.LEVEL // 04 (SECURED)',
-    nodeHash: '0x3B19',
-    launchDate: '01/2025',
+    id: 4,
+    title: 'Samsung',
+    category: 'E-commerce Partner',
+    description: 'Samsung partner ecosystem portal featuring modern high-density hardware layouts, responsive product matrices, and interactive UI nodes.',
+    tech: ['HTML5', 'CSS3', 'JS', 'UI Craft'],
+    image: '/projects/samsungmatrix.webp',
+    link: 'https://www.mediazone.ma/samsung',
+    brandColor: '#38BDF8',
+    glowColor: 'rgba(56, 189, 248, 0.45)',
+    securityLevel: 'SYS.LEVEL // 05 (ACTIVE)',
+    nodeHash: '0x2D90',
+    launchDate: '03/2025',
     stats: {
       perf: '60 FPS',
-      latency: '0.12MS',
-      security: 'AUTHENTICATED',
+      latency: '0.15MS',
+      security: 'VERIFIED',
+    },
+  },
+  {
+    id: 5,
+    title: 'Asus',
+    category: 'Hardware & ROG Showcase',
+    description: 'Asus gaming and commercial tech showcase for Mediazone featuring cutting-edge hardware matrices and high-contrast cyberpunk styling.',
+    tech: ['HTML5', 'CSS3', 'JS', 'Hardware UI'],
+    image: '/projects/assusmatrix.webp',
+    link: 'https://assus-mediazone.vercel.app/',
+    brandColor: '#FF0055',
+    glowColor: 'rgba(255, 0, 85, 0.45)',
+    securityLevel: 'SYS.LEVEL // 05 (ROG SECURE)',
+    nodeHash: '0x99AA',
+    launchDate: '04/2025',
+    stats: {
+      perf: 'OVERCLOCKED',
+      latency: '0.02MS',
+      security: 'SHIELDED',
+    },
+  },
+  {
+    id: 6,
+    title: 'Mediazone Pro',
+    category: 'B2B Solutions & Landing',
+    description: 'Professional B2B digital portal engineered for enterprise solutions, service showcases, and client conversion workflows.',
+    tech: ['HTML5', 'CSS3', 'JS', 'Enterprise Stack'],
+    image: '/projects/promatrix.webp',
+    link: 'https://landing-page-media-zone.vercel.app/',
+    brandColor: '#A855F7',
+    glowColor: 'rgba(168, 85, 247, 0.45)',
+    securityLevel: 'SYS.LEVEL // 04 (ENTERPRISE)',
+    nodeHash: '0x4F18',
+    launchDate: '04/2025',
+    stats: {
+      perf: 'OPTIMIZED',
+      latency: '0.09MS',
+      security: 'ENTERPRISE',
     },
   },
 ];
@@ -497,9 +497,10 @@ export default function Projects() {
               <span className="text-white font-bold tracking-widest [@media(min-width:1800px)]:text-[0.8vw]">HTTPS // TLS3</span>
             </div>
             <div className="col-span-2 sm:col-span-1 p-2.5 rounded border border-[#00ff41]/20 bg-black/50 backdrop-blur-sm [@media(min-width:1800px)]:p-[1vw]">
-              <span className="block text-[9px] text-zinc-500 uppercase tracking-wider [@media(min-width:1800px)]:text-[0.6vw]">STATUS</span>
-              <span className="text-[#00ff41] font-bold tracking-widest flex items-center gap-1.5 [@media(min-width:1800px)]:text-[0.8vw] [@media(min-width:1800px)]:gap-[0.5vw]">
-                <ShieldCheck className="w-3.5 h-3.5 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" /> 100% SECURE
+              <span className="block text-[9px] text-zinc-500 uppercase tracking-wider mb-0.5 [@media(min-width:1800px)]:text-[0.6vw]">STATUS</span>
+              <span className="flex items-center gap-1.5 text-[#00ff41] font-bold tracking-widest [@media(min-width:1800px)]:text-[0.8vw] [@media(min-width:1800px)]:gap-[0.5vw]">
+                <ShieldCheck className="w-3.5 h-3.5 flex-shrink-0 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" />
+                <span>100% SECURE</span>
               </span>
             </div>
           </div>
@@ -863,7 +864,7 @@ export default function Projects() {
         {/* Horizontal Scroll Container — touch swipe on mobile, arrow nav on desktop */}
         <div
           ref={carouselRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 scrollbar-hide overscroll-x-contain touch-pan-x select-none"
+          className="flex gap-3 md:gap-4 overflow-x-auto pb-4 scroll-smooth scrollbar-hide overscroll-x-contain snap-x snap-mandatory scroll-px-4 touch-pan-x select-none"
           style={{
             WebkitOverflowScrolling: 'touch',
             willChange: 'transform',
@@ -879,7 +880,7 @@ export default function Projects() {
                 onClick={() => selectProject(i)}
                 aria-label={`Select ${proj.title} project`}
                 aria-pressed={isActive}
-                className={`flex-shrink-0 w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
+                className={`flex-shrink-0 snap-center w-[160px] sm:w-[190px] md:w-[220px] [@media(min-width:1800px)]:w-[18vw] text-left cursor-pointer rounded-xl overflow-hidden border-[1.5px] transition-all duration-300 group/card ${isActive
                   ? 'scale-[1.02] opacity-100 z-10'
                   : 'opacity-65 hover:opacity-95 hover:scale-[1.01]'
                   }`}
