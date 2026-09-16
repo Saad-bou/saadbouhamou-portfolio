@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChat } from '@ai-sdk/react';
 import { UIMessage } from 'ai';
-import { Send, Minimize2, X } from 'lucide-react';
+import { Send, Minimize2, X, Mic, Square } from 'lucide-react';
 import Image from 'next/image';
+
+import { useVoiceMode } from '@/hooks/useVoiceMode';
 
 // â”€â”€â”€ Helper: extract text from UIMessage parts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
@@ -159,6 +161,52 @@ export default function ChatBody({
     sendMessage({ text });
     setInputValue('');
   }, [inputValue, isLoading, sendMessage]);
+
+  // Voice Mode - thin layer over the existing sendMessage pipeline
+  const voicePendingRef = useRef(false);
+  const spokenMessageIdRef = useRef<string | null>(null);
+
+  const handleVoiceTranscript = useCallback(
+    (text: string) => {
+      if (isLoading) return;
+      voicePendingRef.current = true;
+      sendMessage({ text });
+    },
+    [isLoading, sendMessage]
+  );
+
+  const {
+    status: voiceStatus,
+    interim: voiceInterim,
+    errorMessage: voiceError,
+    support: voiceSupport,
+    toggleListening,
+    speak,
+    stopSpeaking,
+  } = useVoiceMode({ onTranscript: handleVoiceTranscript });
+
+  const lastAssistantMessage = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i -= 1) {
+      if (messages[i].role === 'assistant') return messages[i];
+    }
+    return null;
+  }, [messages]);
+
+  // Speak the AI response after a voice-triggered turn finishes streaming.
+  useEffect(() => {
+    if (!voicePendingRef.current) return;
+    if (status === 'ready' && lastAssistantMessage) {
+      const id = lastAssistantMessage.id;
+      if (spokenMessageIdRef.current !== id) {
+        spokenMessageIdRef.current = id;
+        voicePendingRef.current = false;
+        const text = getMessageText(lastAssistantMessage);
+        if (text.trim()) speak(text);
+      }
+    } else if (status === 'error') {
+      voicePendingRef.current = false;
+    }
+  }, [status, lastAssistantMessage, speak]);
 
   // â”€â”€ Keyboard: Enter to send, Shift+Enter for newline â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const handleKeyDown = useCallback(
@@ -407,6 +455,51 @@ export default function ChatBody({
 
                 {/* â”€â”€â”€ Input Area â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                 <div className="shrink-0 px-3 sm:px-4 py-3 border-t border-[#00FF41]/15 bg-[#00FF41]/[0.02]">
+                  {(voiceStatus === 'listening' ||
+                    voiceStatus === 'speaking' ||
+                    voiceError) && (
+                    <div className="flex items-center gap-2 mb-2 min-h-5">
+                      {voiceStatus === 'listening' && (
+                        <>
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#00FF41] animate-pulse" />
+                          <span className="text-[11px] font-mono text-[#00FF41]/70 truncate">
+                            {voiceInterim
+                              ? 'Listening: ' + voiceInterim
+                              : 'Listening…'}
+                          </span>
+                        </>
+                      )}
+                      {voiceStatus === 'speaking' && (
+                        <>
+                          <span
+                            className="flex items-end gap-[2px] h-3 shrink-0"
+                            aria-hidden="true"
+                          >
+                            <span className="voice-eq-bar w-[3px] h-full bg-[#00FF41] rounded-sm" />
+                            <span className="voice-eq-bar w-[3px] h-full bg-[#00FF41] rounded-sm" />
+                            <span className="voice-eq-bar w-[3px] h-full bg-[#00FF41] rounded-sm" />
+                          </span>
+                          <span className="text-[11px] font-mono text-[#00FF41]/70">
+                            Speaking
+                          </span>
+                          <button
+                            type="button"
+                            onClick={stopSpeaking}
+                            className="ml-1 inline-flex items-center gap-1 rounded-md border border-[#00FF41]/30 text-[#00FF41]/80 hover:bg-[#00FF41]/10 hover:text-[#00FF41] px-1.5 py-0.5 text-[10px] font-mono transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00FF41]"
+                            aria-label="Stop speaking"
+                          >
+                            <Square className="w-2.5 h-2.5" />
+                            Stop
+                          </button>
+                        </>
+                      )}
+                      {voiceError && (
+                        <span className="text-[11px] font-mono text-red-400 truncate">
+                          {voiceError}
+                        </span>
+                      )}
+                    </div>
+                  )}
                   <div className="flex items-end gap-2 rounded-xl border border-[#00FF41]/25 bg-[#0a0a0a]/60 focus-within:border-[#00FF41]/60 focus-within:shadow-[0_0_12px_rgba(0,255,65,0.15)] transition-all duration-300 px-3 py-2">
                     <textarea
                       ref={inputRef}
@@ -425,6 +518,38 @@ export default function ChatBody({
                       "
                       style={{ lineHeight: '1.5' }}
                     />
+                    <button
+                      type="button"
+                      id="ai-chat-mic"
+                      onClick={toggleListening}
+                      disabled={isLoading || !voiceSupport.recognition}
+                      aria-pressed={voiceStatus === 'listening'}
+                      aria-label={
+                        voiceStatus === 'listening'
+                          ? 'Stop voice input'
+                          : 'Start voice input'
+                      }
+                      title="Voice input"
+                      className={`
+                        shrink-0 w-8 h-8 rounded-lg
+                        border border-[#00FF41]/25 text-[#00FF41]/70
+                        flex items-center justify-center
+                        hover:text-[#00FF41] hover:border-[#00FF41]/50 hover:bg-[#00FF41]/10
+                        focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00FF41]
+                        transition-all duration-200
+                        disabled:opacity-30 disabled:cursor-not-allowed
+                        ${voiceStatus === 'listening' ? 'bg-[#00FF41]/15 border-[#00FF41]/60 text-[#00FF41]' : ''}
+                      `}
+                    >
+                      {voiceStatus === 'listening' ? (
+                        <span className="relative flex items-center justify-center">
+                          <span className="absolute inline-flex h-5 w-5 rounded-full bg-[#00FF41]/30 animate-ping" />
+                          <Mic className="w-3.5 h-3.5 relative" />
+                        </span>
+                      ) : (
+                        <Mic className="w-3.5 h-3.5" />
+                      )}
+                    </button>
                     <motion.button
                       type="button"
                       id="ai-chat-send"
