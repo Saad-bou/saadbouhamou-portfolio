@@ -21,6 +21,10 @@ const navLinks = [
   { name: "CONTACT", href: "#contact" },
 ];
 
+// Routes that are their own case study: the section anchors are replaced by a
+// "BACK TO HOME" link (the home page sections don't exist on those routes).
+const CASE_STUDY_ROUTES = ["/le-petit-college", "/mono"];
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -30,7 +34,7 @@ export default function Navbar() {
   const [hasPanelMounted, setHasPanelMounted] = useState(false);
   const lenis = useLenis();
   const pathname = usePathname();
-  const isCaseStudy = pathname.startsWith("/le-petit-college");
+  const isCaseStudy = CASE_STUDY_ROUTES.some((route) => pathname.startsWith(route));
 
   useEffect(() => {
     const handleScroll = () => {

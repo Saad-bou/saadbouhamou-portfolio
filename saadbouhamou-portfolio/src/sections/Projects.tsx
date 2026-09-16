@@ -37,6 +37,26 @@ export interface ProjectItem {
 const projects: ProjectItem[] = [
   {
     id: 1,
+    title: 'MONO',
+    category: 'E-commerce Platform + AI',
+    description: 'Full-stack e-commerce platform with an AI virtual try-on: Next.js frontend, Node.js/Express REST API, Prisma + MySQL, and a provider-based AI pipeline that renders garments on the customer’s own photo.',
+    tech: ['Next.js', 'Node.js', 'Express', 'Prisma', 'MySQL', 'JWT', 'AI'],
+    image: '/projects/mono/tryon-hero.webp',
+    link: '/mono',
+    isInternal: true,
+    brandColor: '#FFFFFF',
+    glowColor: 'rgba(255, 255, 255, 0.42)',
+    securityLevel: 'SYS.LEVEL // 05 (JWT SECURED)',
+    nodeHash: '0x4D4F',
+    launchDate: '06/2026',
+    stats: {
+      perf: 'FULL-STACK',
+      latency: 'AI PIPELINE',
+      security: 'JWT AUTH',
+    },
+  },
+  {
+    id: 2,
     title: 'Le Petit Collège',
     category: 'Education Platform',
     description: 'Custom educational platform engineered to replace Wix: 17 independent Vanilla JS/CSS micro-modules, 60fps animations, and AI video integrations.',
@@ -56,7 +76,7 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 2,
+    id: 3,
     title: 'Yamaha',
     category: 'E-commerce Platform',
     description: 'Yamaha partner e-commerce platform for Mediazone — engineered for ultra-fast catalog discovery, streamlined checkout, and high conversion.',
@@ -75,7 +95,7 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 3,
+    id: 4,
     title: 'JBL',
     category: 'Audio & E-commerce',
     description: 'JBL authorized partner platform with advanced AJAX dynamic filtering, real-time product queries, and sleek sound-gear presentation.',
@@ -94,7 +114,7 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 4,
+    id: 5,
     title: 'Samsung',
     category: 'E-commerce Partner',
     description: 'Samsung partner ecosystem portal featuring modern high-density hardware layouts, responsive product matrices, and interactive UI nodes.',
@@ -113,7 +133,7 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 5,
+    id: 6,
     title: 'Asus',
     category: 'Hardware & ROG Showcase',
     description: 'Asus gaming and commercial tech showcase for Mediazone featuring cutting-edge hardware matrices and high-contrast cyberpunk styling.',
@@ -132,7 +152,7 @@ const projects: ProjectItem[] = [
     },
   },
   {
-    id: 6,
+    id: 7,
     title: 'Mediazone Pro',
     category: 'B2B Solutions & Landing',
     description: 'Professional B2B digital portal engineered for enterprise solutions, service showcases, and client conversion workflows.',
