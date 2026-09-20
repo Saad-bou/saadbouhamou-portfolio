@@ -15,9 +15,33 @@ html, body {
   /* نمنعو الـ rubber-band scroll اللي كيبين بياض على iOS */
   background-color: #000;
   overscroll-behavior-y: none;
-  /* 🔥 Day 9: قتلنا الـ horizontal scroll تماماً على الموبايل */
-  overflow-x: hidden;
+  /*
+    🔥 Day 9: قتلنا الـ horizontal scroll تماماً على الموبايل
+    — ولكن بـ `clip` ماشي `hidden`.
+
+    `overflow-x: hidden` هنا كان كيقتل `position: sticky` فالصفحة كاملة:
+    منين كتحط `hidden` فمحور، المحور الآخر كيتحسب `auto` — و `body` كيولي
+    scroll container. أي عنصر `position: sticky` كيتقيد بـ scrollport ديال
+    `body`، و `body` عمرو ما كيسكرول (كيكبر مع المحتوى) → الـ sticky كيسكرول
+    مع الصفحة عوض ما يتثبت. هادشي علاش الـ section nav ديال wima-car ما كانش
+    كيتثبت تحت الـ Navbar.
+
+    `clip` كيقطع نفس الـ bleed الأفقي بلا ما يخلق scroll container،
+    فـ `position: sticky` كيرجع كيخدم.
+  */
+  overflow-x: clip;
   -webkit-tap-highlight-color: transparent;
+}
+
+/*
+  Fallback للـ browsers اللي ماعندهاش `overflow: clip` (Safari < 16).
+  `hidden` على `html` بوحدو كافي باش يقطع الـ bleed الأفقي — و بخلاف
+  `hidden` على `body`، ما كيخليش `body` scroll container.
+*/
+@supports not (overflow: clip) {
+  html {
+    overflow-x: hidden;
+  }
 }
 
 body {
@@ -126,6 +150,21 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ==============================
+   Case-study anchor targets
+   The /wima-car page has a sticky section nav under the fixed navbar, so an
+   anchor jump has to clear both. Kept here rather than repeated on every
+   <Section> so the offset stays in one place.
+   ============================== */
+[id^="wima-"] {
+  scroll-margin-top: 8.5rem;
+}
+@media (min-width: 640px) {
+  [id^="wima-"] {
+    scroll-margin-top: 9.5rem;
+  }
 }
 
 /* ==============================

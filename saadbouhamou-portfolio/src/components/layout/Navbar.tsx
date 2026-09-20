@@ -23,7 +23,7 @@ const navLinks = [
 
 // Routes that are their own case study: the section anchors are replaced by a
 // "BACK TO HOME" link (the home page sections don't exist on those routes).
-const CASE_STUDY_ROUTES = ["/le-petit-college", "/mono"];
+const CASE_STUDY_ROUTES = ["/le-petit-college", "/mono", "/wima-car"];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
