@@ -36,7 +36,7 @@ export default function MatrixButtonCV() {
 
   return (
     <a 
-      href="/CV_Saad_Bouhamou.dev.pdf" 
+      href="/CV_Saad_Bouhamou.dev2026.pdf" 
       target="_blank" 
       rel="noopener noreferrer"
       title="Download Saad Bouhamou Resume - Full-Stack Developer & AI Strategist"

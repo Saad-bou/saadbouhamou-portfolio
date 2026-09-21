@@ -39,7 +39,7 @@ export default function HeroText() {
           size="lg"
           className="rounded-full px-6 sm:px-8 border-white/10 text-white hover:bg-white/5 h-10 sm:h-11 text-sm sm:text-base transition-all duration-200 active:scale-95 [@media(min-width:1800px)]:px-[3vw] [@media(min-width:1800px)]:h-[4vw] [@media(min-width:1800px)]:text-[1.2vw]"
         >
-          <a href="/CV_Saad_Bouhamou.dev.pdf" target="_blank" rel="noopener noreferrer" title="Download Saad Bouhamou Resume - Full-Stack Developer & AI Strategist">
+          <a href="/CV_Saad_Bouhamou.dev2026.pdf" target="_blank" rel="noopener noreferrer" title="Download Saad Bouhamou Resume - Full-Stack Developer & AI Strategist">
             Resume
           </a>
         </Button>
