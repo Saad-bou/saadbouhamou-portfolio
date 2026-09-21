@@ -7,36 +7,63 @@
   "age": 25,
   "date_of_birth": "May 22, 2001",
   "github": "https://github.com/Saad-bou",
-  "linkedin": "https://www.linkedin.com/in/saad-bouhamou",
+  "linkedin": "https://www.linkedin.com/in/saad-bouhamou-59278a3bb/",
   "portfolio": "saadbouhamou.dev",
   "languages_spoken": ["Moroccan Darija", "Arabic", "English", "French"],
   "education": [
     {
-      "year": "2025 - 2026",
+      "year": "2026",
       "institution": "ISMAGI",
       "degree": "Licence Professionnelle en Developpement Web et Mobile",
-      "description": "Completing a professional license focused on web and mobile development."
+      "description": "Professional licence in web and mobile development. Final-year project: MONO, an AI fashion e-commerce platform."
     },
     {
-      "degree": "Technicien Specialise in Computer Development",
+      "year": "2024",
+      "institution": "PRO-SYSTEME",
+      "degree": "Technicien Specialise en Developpement Informatique",
       "description": "Specialized technical training in computer development."
+    },
+    {
+      "year": "2022",
+      "institution": "Faculte des Sciences Rabat",
+      "degree": "Physics & Chemistry",
+      "description": "University studies in physical sciences and chemistry."
     },
     {
       "year": "2019",
       "degree": "Scientific Baccalaureate",
-      "location": "Rabat"
+      "location": "Rabat",
+      "description": "Scientific baccalaureate — physics & chemistry."
     }
   ],
   "skills": {
-    "frontend": ["Django templates", "React", "Next.js", "Vue.js", "Tailwind CSS", "Three.js", "Scrolling animations", "3D web elements"],
-    "backend": ["Django", "Python", "SQL"],
-    "databases": ["Snowflake", "SQL"],
-    "automation": ["n8n", "Digital automation", "Workflow automation"],
+    "frontend": ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "HTML5", "CSS3", "JavaScript", "Vanilla JS", "Vue.js", "Flutter", "Swift"],
+    "backend": ["Node.js", "Express.js", "REST APIs", "PHP", "Laravel", "Python", "Django"],
+    "databases": ["PostgreSQL", "MySQL", "MongoDB", "Prisma ORM", "SQL", "Snowflake"],
+    "ai_agentic": ["LLM Orchestration", "Prompt Ops", "Agentic UX", "AI Marketing"],
     "ai_media": ["Seedance", "Kling", "Magnific AI", "Vmake AI", "Roboneo AI", "Groq & Qwen"],
-    "tools": ["Cursor", "Git", "GitHub", "Canva"],
+    "automation": ["n8n", "Digital automation", "Workflow automation"],
+    "devops_tools": ["Git", "Docker", "Vercel", "Agile", "DevOps", "UML", "WordPress", "SEO"],
+    "tools": ["Cursor", "GitHub", "Canva"],
     "hobbies": ["Bodybuilding", "Musculation"]
   },
   "projects": [
+    {
+      "name": "MONO",
+      "date": "2026",
+      "category": "AI Fashion E-Commerce (PFE)",
+      "tech": ["Next.js", "React", "Node.js", "Express", "Prisma", "MySQL", "JWT", "AI Virtual Try-On"],
+      "url": "/mono",
+      "description": "Final-year project (PFE): a luxury fashion e-commerce platform with an AI virtual try-on — Next.js/React front-end, Node.js REST API, Prisma + MySQL, authentication and cart/state management."
+    },
+    {
+      "name": "WIMA CAR",
+      "date": "2026",
+      "category": "Client Platform + SEO",
+      "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Technical SEO", "Local SEO"],
+      "url": "/wima-car",
+      "description": "Freelance client project: a production car-rental platform for WIMA CAR (Rabat) — multilingual architecture across 5 languages, crawlable vehicle landing pages, technical & local SEO, Google Search Console indexing work and a WhatsApp reservation flow."
+    },
     {
       "name": "Explorateur de Donnees OpenData Maroc",
       "date": "April 2026",
@@ -96,16 +123,28 @@
   ],
   "experience": [
     {
+      "company": "WIMA CAR",
+      "role": "Freelance Full-Stack Developer & SEO",
+      "period": "2026",
+      "description": "Freelance client mission: a production car-rental platform built with Next.js, React and TypeScript — multilingual architecture (5 languages), crawlable vehicle landing pages, technical & local SEO, Google Search Console indexing work and a WhatsApp reservation flow, deployed to production."
+    },
+    {
+      "company": "Ecole Petite College",
+      "role": "IT Agent, promoted to Full-Stack Developer & AI Marketing",
+      "period": "December 2025 - May 2026",
+      "description": "Managed the Wix-to-custom platform transfer, Canva designs and school data; handled database optimization, data indexing and server maintenance; engineered a premium Vanilla JS web platform and produced 6 high-conversion AI advertising videos."
+    },
+    {
       "company": "Mediazone (Nethub)",
-      "role": "Front-End Developer Intern",
+      "role": "Front-End Developer",
       "period": "January 2025 - June 2025",
       "description": "Architected & maintained 4 scalable e-commerce platforms. Executed advanced AJAX integrations and PHP backend scripting."
     },
     {
-      "company": "Ecole Privee Le Petit College",
-      "role": "IT & Data Management Agent, promoted to Full-Stack Developer & AI Marketer",
-      "period": "September 2025 - May 2026",
-      "description": "Managed the Wix-to-custom platform transfer, Canva designs and school data; handled database optimization, data indexing and server maintenance; engineered a premium Vanilla JS web platform and produced 6 high-conversion AI advertising videos."
+      "company": "Ministere de l'Equipement",
+      "role": "End-of-Studies Intern (PFE)",
+      "period": "May 2024 - June 2024",
+      "description": "Developed high-performance UI components and integrated core PHP/SQL backend data pipelines."
     }
   ],
   "personality": {

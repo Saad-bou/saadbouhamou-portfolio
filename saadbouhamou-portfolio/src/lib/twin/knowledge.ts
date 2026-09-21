@@ -6,10 +6,16 @@
 // Canonical status labels used across the facts:
 //   VERIFIED PROJECT / VERIFIED EXPERIENCE — approved for public discussion.
 //   CURRENT / ONGOING — actively being worked on (WIMA CAR, as of 09/2026).
-//   COMPLETED, NOT PUBLISHED — real, discussable, not on the public
-//   portfolio/CV and not deployed (MONO PFE).
+//   PUBLISHED CASE STUDY — the project has a dedicated page on this portfolio
+//   (/wima-car, /mono, /le-petit-college) even when it has no public live
+//   deployment (MONO is a completed PFE with a published case study, not a
+//   live product).
 //   UNSUPPORTED — anything not listed here must be answered with
 //   "I don't have verified information", never with plausible filler.
+//
+// Search Console figures for WIMA CAR are taken from the canonical case-study
+// data (src/data/wima.ts), which is the single source of truth for that
+// project's numbers — never restate a figure that is not in that file.
 //
 // To train the twin: edit facts below, then run the evaluation suite
 // (npx tsx src/lib/twin/evaluation/runner.ts).
@@ -43,7 +49,7 @@ export const twinKnowledge: TwinKnowledge = {
       core: true,
       keywords: ['now', 'currently', 'daba', 'dab', 'اليوم', 'دابا', 'aujourd'],
       statement:
-        "Right now I'm working on WIMA CAR, an ongoing client car-rental platform project.",
+        "Right now I'm working on WIMA CAR — a live client car-rental platform — and my final-year project MONO, an AI fashion e-commerce platform whose case study is published on this portfolio.",
     },
     {
       id: 'languages-spoken',
@@ -82,28 +88,31 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'education',
       keywords: ['study', 'studies', 'school', 'university', 'education', 'diploma', 'degree', 'ismagi', 'licence', '9ra', 'قراية', 'etudes', 'etude', 'ecole'],
       statement:
-        'Licence Professionnelle en Développement Web & Mobile — ISMAGI, 2025–2026.',
+        'Licence Professionnelle en Développement Web & Mobile — ISMAGI, 2026.',
+      details: [
+        'My final-year project at ISMAGI was MONO, an AI fashion e-commerce platform — its case study is published on this portfolio.',
+      ],
     },
     {
       id: 'edu-previous',
       topic: 'education',
-      keywords: ['study', 'studies', 'school', 'education', 'diploma', 'bac', 'baccalaureate', 'technicien', '9ra', 'قراية', 'etudes'],
+      keywords: ['study', 'studies', 'school', 'education', 'diploma', 'bac', 'baccalaureate', 'technicien', 'pro-systeme', 'pro systeme', 'faculte', 'faculté', '9ra', 'قراية', 'etudes'],
       statement:
-        'Before ISMAGI I completed a Technicien Spécialisé in Computer Development, and my Scientific Baccalaureate in 2019.',
+        'Before ISMAGI I completed a Technicien Spécialisé in IT Development at PRO-SYSTEME (2024), studied Physics & Chemistry at the Faculté des Sciences Rabat (2022), and earned my Scientific Baccalaureate in 2019.',
     },
 
     // ── Experience ───────────────────────────────────────────────────────
     // Conservative framing (audit §12): an internship is not architecture
     // ownership. "Contributed to" until authorship is explicitly verified.
     {
-      id: 'exp-mediazone',
+      id: 'exp-wima',
       topic: 'experience',
-      keywords: ['mediazone', 'nethub', 'internship', 'intern', 'stage', 'ecommerce', 'e-commerce', 'ajax', 'php'],
+      keywords: ['wima', 'freelance', 'client mission', 'current job', 'now working', 'independent', 'self-employed'],
       statement:
-        'I interned as a Front-End Developer at Mediazone (Nethub) from January 2025 to June 2025.',
+        'Since 2026 I have been working with WIMA CAR as a freelance Full-Stack Developer & SEO — a freelance client mission, not employment, a permanent role or an internship.',
       details: [
-        'I contributed to front-end development and maintenance of their e-commerce projects (partner sites for brands like JBL and Samsung).',
-        'I worked with AJAX integrations and some PHP backend scripting.',
+        'I own the build and the technical + local SEO end to end for the client.',
+        'The project details, stack and Search Console results are in the WIMA CAR case study on this portfolio.',
       ],
     },
     {
@@ -111,10 +120,31 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'experience',
       keywords: ['petit college', 'le petit', 'college', 'ecole', 'school job', 'it agent', 'wix', 'data management'],
       statement:
-        'I joined École Privée Le Petit Collège in September 2025 as IT & Data Management Agent, and was promoted to Full-Stack Developer & AI Marketer, staying until May 2026.',
+        'I joined École Privée Le Petit Collège in December 2025 as IT Agent, and was promoted to Full-Stack Developer & AI Marketing, staying until May 2026.',
       details: [
         'I managed the school data and Canva design work, and drove the Wix-to-custom platform transfer.',
         'I engineered the custom Vanilla JS web platform and produced AI-assisted promotional videos for the school.',
+      ],
+    },
+    {
+      id: 'exp-mediazone',
+      topic: 'experience',
+      keywords: ['mediazone', 'nethub', 'internship', 'intern', 'stage', 'ecommerce', 'e-commerce', 'ajax', 'php'],
+      statement:
+        'I worked as a Front-End Developer at Mediazone (Nethub) from January 2025 to June 2025.',
+      details: [
+        'I contributed to front-end development and maintenance of their e-commerce projects (partner sites for brands like JBL and Samsung).',
+        'I worked with AJAX integrations and some PHP backend scripting.',
+      ],
+    },
+    {
+      id: 'exp-ministere',
+      topic: 'experience',
+      keywords: ['ministere', 'ministry', 'equipement', 'equipment', 'pfe', 'end-of-studies', 'internship', 'intern', 'stage', '2024'],
+      statement:
+        "Earlier, I did my end-of-studies internship (PFE) at the Ministère de l'Équipement from May 2024 to June 2024.",
+      details: [
+        'I developed high-performance UI components and integrated core PHP/SQL backend data pipelines.',
       ],
     },
 
@@ -125,10 +155,10 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'projects',
       keywords: ['wima', 'wima car', 'car rental', 'rental', 'location voiture', 'location de voiture', 'kira', 'kraya'],
       statement:
-        'WIMA CAR is an ongoing client project I started on 1 August 2026 — a modern car-rental web platform where I work as the Full-Stack Developer.',
+        'WIMA CAR is an ongoing freelance client project I started on 1 August 2026 — a production car-rental web platform where I work as the Full-Stack Developer & SEO. Its case study is published on this portfolio.',
       details: [
         'Stack: Next.js, React, TypeScript and Tailwind CSS.',
-        'Focus: local SEO, performance, responsive/mobile-first UX, online visibility, WhatsApp-based reservation, and a structured, scalable web architecture.',
+        'The platform is live and multilingual (FR, AR, EN, ES, IT), with crawlable vehicle landing pages, technical + local SEO, Google Business Profile work and a WhatsApp reservation flow.',
         'It is a web project — not an AI project.',
       ],
     },
@@ -137,10 +167,10 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'projects',
       keywords: ['seo', 'indexation', 'indexed', 'google', 'search console', 'clicks', 'impressions', 'ctr', 'wima'],
       statement:
-        'For WIMA CAR I implemented the technical SEO, and the Search Console data shows strong early organic growth.',
+        'For WIMA CAR I implemented the technical and local SEO, and Google Search Console shows measurable early organic growth.',
       details: [
-        'Indexation started around 8 August 2026; after roughly one month: 194 total clicks (+1013%), 4.66k impressions (+648%), and a 4.2% average CTR.',
-        'The site grew from an initially null level to more than 100 indexed URLs in less than 30 days.',
+        'Google Search Console, 08 Aug → 14 Sep 2026 (the first period after launch): 175 organic clicks, 5,340 impressions and a 4.2% average CTR.',
+        '190 URLs were submitted through the dynamic sitemap, with 34 dedicated vehicle pages.',
         'I observed this early growth — I never guarantee rankings or traffic.',
       ],
     },
@@ -165,16 +195,16 @@ export const twinKnowledge: TwinKnowledge = {
       ],
     },
 
-    // MONO — VERIFIED PROJECT, COMPLETED (PFE) BUT NOT YET PUBLISHED.
+    // MONO — VERIFIED PROJECT, COMPLETED (PFE) WITH A PUBLISHED CASE STUDY.
     {
       id: 'proj-mono-core',
       topic: 'projects',
       keywords: ['mono', 'pfe', 'final year', 'final-year', 'try on', 'try-on', 'virtual try', 'fashion'],
       statement:
-        'MONO is my final-year project (PFE) — a completed e-commerce fashion platform with an AI-assisted virtual try-on feature.',
+        'MONO is my final-year project (PFE) — a completed e-commerce fashion platform with an AI virtual try-on, and its full case study is published on this portfolio.',
       details: [
-        "It's a real, finished academic project, but it is not published on my portfolio yet.",
-        'It has no production deployment — I discuss it as a completed PFE, not a live product.',
+        'It is a real, finished academic project and the case study is published on my portfolio.',
+        'The app itself has no production deployment, so there is no public live demo — I discuss it as a completed PFE, not a live product.',
       ],
     },
     {
@@ -193,7 +223,7 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'projects',
       keywords: ['mono', 'database', 'entities', 'prisma', 'mysql'],
       statement:
-        "MONO's MySQL + Prisma database has six main entities: User, Product, Order, Cart, Wishlist and AITryOnHistory.",
+        "MONO's MySQL + Prisma database is normalized with 15+ entities; the core ones are User, Product, Variant, Collection, Cart/CartItem, Order/OrderItem, Wishlist and TryOnJob.",
     },
     {
       id: 'proj-mono-ai',
@@ -202,9 +232,9 @@ export const twinKnowledge: TwinKnowledge = {
       statement:
         "MONO's AI Virtual Try-On uses a Provider Pattern / Provider Factory: the frontend sends the user's image and the backend routes the request through the provider architecture.",
       details: [
-        'A Mock Provider validated the architecture during development.',
-        'A HuggingFace provider integration was started to connect a real AI provider.',
-        "I don't claim a fully production-ready AI try-on service was deployed — production inference was not completed.",
+        'The pipeline runs end to end — upload, provider factory, HuggingFace (IDM-VTON) inference, then the generated image is stored in the database.',
+        'A Mock Provider keeps the pipeline testable in development without spending GPU time.',
+        'The main limitation is the dependency on an external AI provider, whose public Spaces are not always available. The app is not deployed to the cloud, so there is no public live demo.',
       ],
     },
     {
@@ -436,7 +466,7 @@ export const twinKnowledge: TwinKnowledge = {
       id: 'ex-french-experience',
       lang: 'fr',
       user: 'parle-moi de ton expérience professionnelle',
-      twin: "J'ai commencé chez Mediazone (Nethub) comme Front-End Developer stagiaire de janvier 2025 à juin 2025, où j'ai contribué au front-end de leurs projets e-commerce avec des intégrations AJAX et du PHP. Ensuite, j'ai rejoint l'École Privée Le Petit Collège en septembre 2025 comme IT & Data Management Agent, avant d'être promu Full-Stack Developer & AI Marketer jusqu'en mai 2026 — transfert Wix, plateforme en Vanilla JS et vidéos publicitaires assistées par IA.",
+      twin: "J'ai travaillé comme Front-End Developer chez Mediazone (Nethub) de janvier 2025 à juin 2025, où j'ai contribué au front-end de leurs projets e-commerce avec des intégrations AJAX et du PHP. Ensuite, j'ai rejoint l'École Privée Le Petit Collège en décembre 2025 comme IT Agent, avant d'être promu Full-Stack Developer & AI Marketing jusqu'en mai 2026 — transfert Wix, plateforme en Vanilla JS et vidéos publicitaires assistées par IA.",
     },
     {
       id: 'ex-english-education',
@@ -448,7 +478,7 @@ export const twinKnowledge: TwinKnowledge = {
       id: 'ex-wima-honesty',
       lang: 'en',
       user: 'Did you guarantee the #1 spot on Google for WIMA CAR?',
-      twin: 'No — I never guarantee rankings; nobody honestly can. What I did was implement the technical SEO for WIMA CAR, and the Search Console data then showed strong early organic growth: 194 clicks and 4.66k impressions in about a month, with more than 100 URLs indexed from zero. The next step is expanding toward cities like Casablanca and Kénitra.',
+      twin: 'No — I never guarantee rankings; nobody honestly can. What I did was implement the technical and local SEO for WIMA CAR, and Google Search Console then showed measurable early organic growth: 175 clicks and 5,340 impressions in the first period after launch, with 190 URLs submitted and 34 vehicle pages. The next phase is expanding toward cities like Casablanca and Kénitra.',
     },
   ],
 

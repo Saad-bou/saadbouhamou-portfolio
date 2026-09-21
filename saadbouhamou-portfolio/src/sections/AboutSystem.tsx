@@ -2,8 +2,9 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Cpu, Briefcase, GraduationCap } from 'lucide-react';
+import { Terminal, Cpu, Briefcase, GraduationCap, Rocket, ArrowUpRight } from 'lucide-react';
 import MatrixButtonCV from '@/components/ui/MatrixButtonCV';
 import { useGsapScoped } from '@/lib/useGsapScoped';
 import { runWhenIdle } from '@/lib/defer';
@@ -27,14 +28,28 @@ function DeferredMatrixPortalCanvas(
 
 const bioText = "I am an elite Full-Stack Developer & AI Strategist, blending precise engineering with premium visual aesthetics. Specializing in high-performance web applications, I architect digital experiences that feel alive. Drawing from my extensive background in developing scalable e-commerce platforms and engineering custom Vanilla JS web ecosystems, I seamlessly merge front-end mastery with AI-driven marketing strategies. From crafting high-conversion AI advertising campaigns to architecting robust backend data pipelines, my work is defined by an obsessive attention to detail, performance optimization, and a drive to push the boundaries of modern digital interactions.";
 
-const careerLogs = [
+type CareerLog = {
+  type: 'SYSTEM' | 'JOB' | 'EDU' | 'FEATURED';
+  text?: string;
+  company?: string;
+  role?: string;
+  date?: string;
+  desc?: string;
+  /** Internal case-study route — rendered as a link on the entry title. */
+  href?: string;
+};
+
+const careerLogs: CareerLog[] = [
   { type: 'SYSTEM', text: '[SUCCESS] Mounting Experience_Logs...' },
-  { type: 'JOB', company: 'ÉCOLE PETITE COLLÈGE', role: 'IT Agent / Full-Stack Developer', date: 'Dec 2025 - May 2026', desc: 'Initially directed large-scale DB optimization, data indexing & server maintenance. Promoted to Full-Stack / AI Marketer: Engineered a premium Vanilla JS web platform, directed social marketing & produced 6 high-conversion AI advertising videos.' },
+  { type: 'JOB', company: 'WIMA CAR', role: 'Freelance Full-Stack Developer & SEO', date: '2026', desc: 'Freelance client mission — a production car-rental platform built with Next.js, React & TypeScript: multilingual architecture across 5 languages, crawlable vehicle landing pages, technical & local SEO, Google Search Console indexing work and a WhatsApp reservation flow, deployed to production.' },
+  { type: 'JOB', company: 'ÉCOLE PETITE COLLÈGE', role: 'IT Agent → Full-Stack Developer & AI Marketing', date: 'Dec 2025 - May 2026', desc: 'Initially directed large-scale DB optimization, data indexing & server maintenance. Promoted to Full-Stack Developer & AI Marketing: Engineered a premium Vanilla JS web platform, directed social marketing & produced 6 high-conversion AI advertising videos.' },
   { type: 'JOB', company: 'MEDIAZONE (NETHUB)', role: 'Front-End Developer', date: 'Jan 2025 - Jun 2025', desc: 'Architected & maintained 4 scalable e-commerce platforms. Executed advanced AJAX integrations and PHP backend scripting.' },
   { type: 'JOB', company: "MINISTÈRE DE L'ÉQUIPEMENT", role: 'End-of-Studies Intern (PFE)', date: 'May 2024 - Jun 2024', desc: 'Developed high-performance UI components and integrated core PHP/SQL backend data pipelines.' },
+  { type: 'SYSTEM', text: '[SUCCESS] Mounting Featured_Projects...' },
+  { type: 'FEATURED', company: 'MONO', role: 'AI Fashion E-Commerce · PFE', date: '2026', href: '/mono', desc: 'Academic flagship project (PFE): a luxury fashion e-commerce platform with an AI virtual try-on — Next.js & React front-end, Node.js REST API, Prisma + MySQL, authentication and cart/state management.' },
   { type: 'SYSTEM', text: '[SUCCESS] Mounting Academic_Records...' },
-  { type: 'EDU', company: 'LICENCE PROFESSIONNELLE', role: 'Web & Mobile Development', date: '2026', desc: 'Advanced full-stack architecture, React, Node.js, and modern mobile frameworks.' },
-  { type: 'EDU', company: 'TECHNICIEN SPÉCIALISÉ', role: 'IT Development', date: '2024', desc: 'Software engineering fundamentals, algorithm design, and database management.' },
+  { type: 'EDU', company: 'LICENCE PROFESSIONNELLE', role: 'Web & Mobile Development', date: 'ISMAGI — 2026', desc: 'Advanced full-stack architecture, React, Node.js, and modern mobile frameworks.' },
+  { type: 'EDU', company: 'TECHNICIEN SPÉCIALISÉ', role: 'IT Development', date: 'PRO-SYSTEME — 2024', desc: 'Software engineering fundamentals, algorithm design, and database management.' },
   { type: 'EDU', company: 'FACULTÉ DES SCIENCES RABAT', role: 'Physics & Chemistry', date: '2022', desc: 'Academic foundation in physical sciences, chemistry, and analytical logic.' },
   { type: 'EDU', company: 'BACCALAURÉAT SCIENTIFIQUE', role: 'Physics & Chemistry', date: '2019', desc: 'Fundamental sciences and mathematics.' },
   { type: 'SYSTEM', text: '[SUCCESS] System specs loaded. Ready for deployment.' }
@@ -406,11 +421,22 @@ export default function AboutSystem() {
                       <span className="text-[#00FF41] font-bold tracking-wide">{log.text}</span>
                     )}
 
-                    {(log.type === 'JOB' || log.type === 'EDU') && (
+                    {(log.type === 'JOB' || log.type === 'EDU' || log.type === 'FEATURED') && (
                       <div className="pl-3 border-l-[1.5px] border-[#00FF41]/30 my-1 flex flex-col gap-1">
                         <div className="flex items-center gap-2 flex-wrap">
-                          {log.type === 'JOB' ? <Briefcase className="w-3.5 h-3.5 text-[#eab308] [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" /> : <GraduationCap className="w-3.5 h-3.5 text-cyan-400 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" />}
-                          <span className="text-white font-bold">{log.company}</span>
+                          {log.type === 'JOB' ? <Briefcase className="w-3.5 h-3.5 text-[#eab308] [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" /> : log.type === 'FEATURED' ? <Rocket className="w-3.5 h-3.5 text-[#00FF41] [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" /> : <GraduationCap className="w-3.5 h-3.5 text-cyan-400 [@media(min-width:1800px)]:w-[1vw] [@media(min-width:1800px)]:h-[1vw]" />}
+                          {log.href ? (
+                            <Link
+                              href={log.href}
+                              title={`Open the ${log.company} case study`}
+                              className="group/featured inline-flex items-center gap-1 text-white font-bold hover:text-[#00FF41] transition-colors"
+                            >
+                              {log.company}
+                              <ArrowUpRight className="w-3 h-3 opacity-60 group-hover/featured:opacity-100 transition-opacity [@media(min-width:1800px)]:w-[0.9vw] [@media(min-width:1800px)]:h-[0.9vw]" />
+                            </Link>
+                          ) : (
+                            <span className="text-white font-bold">{log.company}</span>
+                          )}
                           <span className="text-[#00FF41]/70 text-[10px] md:text-xs [@media(min-width:1800px)]:text-[0.7vw]">({log.date})</span>
                         </div>
                         <div className="text-zinc-300 font-semibold [@media(min-width:1800px)]:text-[0.85vw]">{log.role}</div>

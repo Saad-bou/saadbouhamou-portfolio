@@ -66,11 +66,12 @@ const personSchema = {
   '@type': 'Person',
   name: 'Saad Bouhamou',
   url: SITE_URL,
-  jobTitle: 'Full-Stack Developer',
+  jobTitle: 'Full-Stack Developer & AI Strategist',
   image: `${SITE_URL}/saadbouhamou.webp`,
+  // Canonical social identity — kept in sync with src/lib/contact.ts.
   sameAs: [
     'https://github.com/Saad-bou',
-    'https://www.linkedin.com/in/saad-bouhamou-59278a3bb',
+    'https://www.linkedin.com/in/saad-bouhamou-59278a3bb/',
   ],
 };
 
