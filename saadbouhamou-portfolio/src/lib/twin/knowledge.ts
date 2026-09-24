@@ -49,7 +49,7 @@ export const twinKnowledge: TwinKnowledge = {
       core: true,
       keywords: ['now', 'currently', 'daba', 'dab', 'اليوم', 'دابا', 'aujourd'],
       statement:
-        "Right now I'm working on WIMA CAR — a live client car-rental platform — and my final-year project MONO, an AI fashion e-commerce platform whose case study is published on this portfolio.",
+        "Right now I'm working on my final-year project MONO, an AI fashion e-commerce platform whose case study is published on this portfolio, after recently completing WIMA CAR (Aug - Sep 2026).",
     },
     {
       id: 'languages-spoken',
@@ -109,7 +109,7 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'experience',
       keywords: ['wima', 'freelance', 'client mission', 'current job', 'now working', 'independent', 'self-employed'],
       statement:
-        'Since 2026 I have been working with WIMA CAR as a freelance Full-Stack Developer & SEO — a freelance client mission, not employment, a permanent role or an internship.',
+        'Between August 2026 and September 2026 I worked with WIMA CAR as a freelance Full-Stack Developer & SEO — a freelance client mission, not employment, a permanent role or an internship.',
       details: [
         'I own the build and the technical + local SEO end to end for the client.',
         'The project details, stack and Search Console results are in the WIMA CAR case study on this portfolio.',
@@ -155,7 +155,7 @@ export const twinKnowledge: TwinKnowledge = {
       topic: 'projects',
       keywords: ['wima', 'wima car', 'car rental', 'rental', 'location voiture', 'location de voiture', 'kira', 'kraya'],
       statement:
-        'WIMA CAR is an ongoing freelance client project I started on 1 August 2026 — a production car-rental web platform where I work as the Full-Stack Developer & SEO. Its case study is published on this portfolio.',
+        'WIMA CAR is a completed freelance client project (August - September 2026) — a production car-rental web platform where I worked as the Full-Stack Developer & SEO. Its case study is published on this portfolio.',
       details: [
         'Stack: Next.js, React, TypeScript and Tailwind CSS.',
         'The platform is live and multilingual (FR, AR, EN, ES, IT), with crawlable vehicle landing pages, technical + local SEO, Google Business Profile work and a WhatsApp reservation flow.',

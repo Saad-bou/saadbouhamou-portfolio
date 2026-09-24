@@ -58,7 +58,7 @@
     },
     {
       "name": "WIMA CAR",
-      "date": "2026",
+      "date": "Aug 2026 - Sep 2026",
       "category": "Client Platform + SEO",
       "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Technical SEO", "Local SEO"],
       "url": "/wima-car",
@@ -125,7 +125,7 @@
     {
       "company": "WIMA CAR",
       "role": "Freelance Full-Stack Developer & SEO",
-      "period": "2026",
+      "period": "Aug 2026 - Sep 2026",
       "description": "Freelance client mission: a production car-rental platform built with Next.js, React and TypeScript — multilingual architecture (5 languages), crawlable vehicle landing pages, technical & local SEO, Google Search Console indexing work and a WhatsApp reservation flow, deployed to production."
     },
     {
